@@ -5,10 +5,19 @@
 	Welcome to our chess app. Chess me if you can!
 </p>
 
-
+<% if current_user %>
 <h2> Available Games: </h2>
 <% @games.each do |game| %>
+	<% if game.black_player_user_id.nil? && game.white_player_user_id %>
 	<ul>
-		<li> <%= link_to "Game #{game.id}", game_path(game) %> </li>
+			<li>Waiting for <b>black</b> to join... <%= link_to 'Join this game', join_as_black_game_path(game), method: :put %></li>
+		<% elsif game.black_player_user_id && game.white_player_user_id.nil? %>			
+			<li>Waiting for <b>white</b> to join... <%= link_to 'Join this game', join_as_white_game_path(game), method: :put %></li>
+		<% else %>
+			<li><%= link_to 'Join as black', join_as_black_game_path(game), method: :put %> <b>OR</b> <%= link_to 'Join as white', join_as_white_game_path(game), method: :put %></li>
 	</ul>
+	<% end %>
+<% end %>
+<% else %>
+<h2><%= link_to 'Log in to see available games!', new_user_session_path %></h2>
 <% end %>
