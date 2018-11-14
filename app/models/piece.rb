@@ -52,7 +52,9 @@ class Piece < ApplicationRecord
         return false if x == x_new
         (y_pos..y_new).each do |y|
           next if y == y_pos
-          return true if game.pieces.where(x_pos: x, y_pos: y).size == 2 ## why 2 instead of 1?
+          ## why 2 instead of 1?
+          # should be 1 (BK)
+          return true if game.pieces.where(x_pos: x, y_pos: y).size == 1
         end
       end
     end
