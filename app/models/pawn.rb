@@ -17,6 +17,7 @@ class Pawn < Piece
   end
   
   # still need to add capture move logic
+
   def capture_move(x_new, y_new)
   end
   
