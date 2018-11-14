@@ -36,4 +36,16 @@ RSpec.describe GamesController, type: :controller do
       expect(game.black_player_user_id).to eq user.id
     end
   end
+
+  describe "games#create action" do
+    it "should successfully create a game" do
+      user = FactoryBot.create(:user)
+      sign_in user
+      post :create, params: { game: { white_player_user_id: user.id } }
+      game = Game.last
+      expect(response).to redirect_to game_path(game.id)
+    end
+  end
+
 end
+

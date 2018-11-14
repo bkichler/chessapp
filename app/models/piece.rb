@@ -3,6 +3,10 @@ class Piece < ApplicationRecord
   belongs_to :user
   has_many :moves
 
+  def within_bounds?(x_new, y_new)
+    x_new >= 0 && y_new >= 0 && x_new <= 7 && y_new <= 7
+  end
+
   def valid_move?(x_new, y_new)
     return false if move_type(x_new, y_new) == :invalid
     true
@@ -48,7 +52,7 @@ class Piece < ApplicationRecord
         return false if x == x_new
         (y_pos..y_new).each do |y|
           next if y == y_pos
-          return true if game.pieces.where(x_pos: x, y_pos: y).size == 2
+          return true if game.pieces.where(x_pos: x, y_pos: y).size == 2 ## why 2 instead of 1?
         end
       end
     end
