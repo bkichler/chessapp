@@ -4,8 +4,7 @@ class Pawn < Piece
     return false if backwards_move?(y_new)
     # once capture move logic is complete, will add return true if capture_move(x_new, y_new)
     return false if horizontal_move?(x_new)
-    # is_obstructed? is having an error of some sort so will add 
-    # return false if is_obstructed?(x_new, y_new) when fixed
+    # return false if is_obstructed?(x_new, y_new)
     okay_length?(y_new)
   end
   
