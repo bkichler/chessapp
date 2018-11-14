@@ -1,6 +1,5 @@
 <h1>Welcome to the game</h1>
 
-
 <div class="gameBoard">
   <table>
     <tbody>
@@ -8,16 +7,31 @@
         <tr>
           <% 8.times do |col|%>
 
-            <% pieces = @game.pieces.
+            <% piece = @game.pieces.
               where(
               x_pos: row, 
               y_pos: col 
-              ) %>
+              ).first %>
 
             <% if (row+col) % 2 == 0 %>
-              <td class="whiteSquare"><%= pieces.map { |p| [p.color ? 'White' : 'Black', p.type] } %></td>
+              <td class="whiteSquare">
+                <% if piece.present? %>
+                  <%= [piece.color ? 'White' : 'Black', piece.type, piece.game_id] %>
+                  <%= link_to 'Piece', game_path(piece.game_id)%>
+                <% end %>
+                <% if @piece.present? && @piece == piece %>
+                <% end %>
+              </td>
+
             <% else %>
-              <td class="blackSquare"><%= pieces.map { |p| [p.color ? 'White' : 'Black', p.type] } %></td>
+              <td class="blackSquare">
+                <% if piece.present? %>
+                  <%= [piece.color ? 'White' : 'Black', piece.type.game_id] %>
+                  <%= link_to 'Piece', game_path(piece.game_id) %>
+                <% end %>
+                <% if @piece.present? && @piece == piece %>
+                <% end %>
+              </td>
             <% end %>        
           <% end %>
         </tr>

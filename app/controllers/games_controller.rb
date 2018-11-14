@@ -11,6 +11,7 @@ class GamesController < ApplicationController
 
   def show
     @game = Game.find(params[:id])
+    @piece = Piece.find(params[:id])
   end
 
   def update
@@ -20,6 +21,6 @@ class GamesController < ApplicationController
 
   def game_params
     params.require(:game).
-      permit(:black_player_user_id, :white_player_user_id, :turn_user_id, :game_id)
+      permit(:black_player_user_id, :white_player_user_id, :turn_user_id,)
   end
 end
