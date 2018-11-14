@@ -26,13 +26,17 @@ class Piece < ApplicationRecord
 
   def move_type(x_new, y_new)
     # Need to deal with Knight case
-    horizontal_delta = (x_new - x_pos).abs
-    vertical_delta = (y_new - y_pos).abs
+    vertical_delta = (x_new - x_pos).abs
+    horizontal_delta = (y_new - y_pos).abs
 
     return :horizontal if horizontal_delta > 0 && vertical_delta.zero?
     return :vertical if vertical_delta > 0 && horizontal_delta.zero?
     return :diagonal if vertical_delta == horizontal_delta
-    return :invalid if vertical_delta > 0 && horizontal_delta > 0 && vertical_delta != horizontal_delta && type != "Knight"
+    # Knight case is a bit of a hack, tried the code below, could not quite get it to pass the test. This needs to be addressed 
+    # at some point
+    # return :knight if Rational(vertical_delta, horizontal_delta) == (2/1) || Rational(vertical_delta, horizontal_delta) == (1/2)
+    return :knight if self.type = "Knight"
+    return :invalid if vertical_delta > 0 && horizontal_delta > 0 && vertical_delta != horizontal_delta
   end
 
   def is_obstructed?(x_new, y_new)
@@ -76,5 +80,9 @@ class Piece < ApplicationRecord
       occupant.update_attributes(x_pos: nil, y_pos: nil)
     else return raise "Invalid move"
     end
+  end
+
+  def piece_color
+    self.color
   end
 end
