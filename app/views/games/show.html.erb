@@ -1,28 +1,30 @@
-<h1>Welcome to the game</h1>
-<%= link_to 'Forfeit?', game_path(@game), method: :delete, data: {confirm: 'Are you sure you want to delete this?'}, class: 'btn btn-danger' %>
+<div class="booyah-box col-12">
+  <h1>Welcome to the game</h1>
+  <%= link_to 'Forfeit?', game_path(@game), method: :delete, data: {confirm: 'Are you sure you want to delete this?'}, class: 'btn btn-danger' %>
 
 
-<div class="gameBoard">
-  <table>
-    <tbody>
-      <% 8.times do |row| %>
-        <tr>
-          <% 8.times do |col|%>
+  <div class="gameBoard">
+    <table>
+      <tbody>
+        <% 8.times do |row| %>
+          <tr>
+            <% 8.times do |col|%>
 
-            <% pieces = @game.pieces.
-              where(
-              x_pos: row, 
-              y_pos: col 
-              ) %>
+              <% pieces = @game.pieces.
+                where(
+                x_pos: row, 
+                y_pos: col 
+                ) %>
 
-            <% if (row+col) % 2 == 0 %>
-              <td class="whiteSquare"> <%= pieces.map { |p| [p.color ? 'White' : 'Black', p.type] } %> </td>
-            <% else %>
-              <td class="blackSquare"> <%= pieces.map { |p| [p.color ? 'White' : 'Black', p.type] } %> </td>
-            <% end %>        
-          <% end %>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+              <% if (row+col) % 2 == 0 %>
+                <td class="whiteSquare"> <%= pieces.map { |p| [p.color ? 'White' : 'Black', p.type] } %> </td>
+              <% else %>
+                <td class="blackSquare"> <%= pieces.map { |p| [p.color ? 'White' : 'Black', p.type] } %> </td>
+              <% end %>        
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>
