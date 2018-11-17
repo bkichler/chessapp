@@ -1,6 +1,6 @@
 class Piece < ApplicationRecord
   belongs_to :game
-  belongs_to :user
+  belongs_to :user, optional: true
   has_many :moves
 
   def within_bounds?(x_new, y_new)
