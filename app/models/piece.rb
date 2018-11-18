@@ -70,6 +70,7 @@ class Piece < ApplicationRecord
   # this later to incorporate a piece status
   
   def move_to!(x_new, y_new)
+    # Will raise error if move is invalid
     return raise "Invalid move" if !valid_move?(x_new, y_new)
     occupant = game.piece_present(x_new, y_new)
     current_piece = game.pieces.where(x_pos: x_pos, y_pos: y_pos).first
