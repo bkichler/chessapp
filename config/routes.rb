@@ -7,4 +7,5 @@ Rails.application.routes.draw do
       put :join_as_black, :join_as_white
     end
   end
+  resources :pieces
 end
