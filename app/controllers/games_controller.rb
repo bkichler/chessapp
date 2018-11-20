@@ -44,10 +44,9 @@ class GamesController < ApplicationController
     redirect_to root_path
   end
 
-  private
+  privates
 
   def game_params
-    params.require(:game).
-      permit(:black_player_user_id, :white_player_user_id, :turn_user_id,)
+    params.require(:game).permit(:black_player_user_id, :white_player_user_id, :turn_user_id, :game_id)
   end
 end
