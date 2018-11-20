@@ -33,6 +33,7 @@ def create_white_pieces
       :color => true
     )
   end
+
   Rook.create!(
     :game_id => self.id,
     :x_pos => 0,
