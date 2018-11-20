@@ -1,5 +1,12 @@
 <h1>Welcome to the game</h1>
 
+<script>
+  // 1. Need to allow drag/drop
+  // 2. Need to snap into new position
+  // $(function() {
+  //    $('#piece').draggable();
+  // });
+</script>
 
 <div class="gameBoard">
   <table>
@@ -15,9 +22,9 @@
               ) %>
 
             <% if (row+col) % 2 == 0 %>
-              <td class="whiteSquare"> <%= pieces.map { |p| [p.color ? 'White' : 'Black', p.type] } %> </td>
+              <td id="piece" class="whiteSquare"> <%= pieces.map { |p| [p.color ? 'White' : 'Black', p.type] } %> </td>
             <% else %>
-              <td class="blackSquare"> <%= pieces.map { |p| [p.color ? 'White' : 'Black', p.type] } %> </td>
+              <td id="piece" class="blackSquare"> <%= pieces.map { |p| [p.color ? 'White' : 'Black', p.type] } %> </td>
             <% end %>        
           <% end %>
         </tr>

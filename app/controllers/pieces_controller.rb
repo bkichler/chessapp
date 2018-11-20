@@ -5,7 +5,7 @@ class PiecesController < ApplicationController
 
   def update
     piece = Piece.find(params[:id])
-    piece.update_attributes(task_params)
+    piece.update_attributes(piece_params)
     render json: piece
   end
 
