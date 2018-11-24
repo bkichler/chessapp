@@ -64,6 +64,8 @@ gem 'simple_form'
 gem 'bootstrap', '~> 4.1.3'
 # Bootstrap Javascript depends on jQuery... added jquery rails gem too
 gem 'jquery-rails'
+# Also add jquery-ui to get access to ui methods
+gem 'jquery-ui-rails'
 # Adding Rubocop for Ruby syntax linting
 gem 'rubocop-rails_config'
 
