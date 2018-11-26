@@ -9,6 +9,46 @@
   </head>
 
   <body>
+       
+    <div id="flex-content-container">
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      <%= link_to 'Chessmania', root_path, class: 'navbar-brand' %> 
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <% if user_signed_in? %>
+              <li class="nav-item">
+                <%= link_to 'My Dashboard', '#', class: 'nav-link' %>
+              </li>
+              <li class="nav-item">
+                <%= link_to 'Create a Game', new_game_path, class: 'nav-link' %>
+              </li>
+              <li class="nav-item">
+                <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'nav-link' %>
+              </li>
+            <% else %>
+              <li class="nav-item">
+                <%= link_to 'Sign In', new_user_session_path, class: 'nav-link' %>
+              </li>
+              <li class="nav-item">
+                <%= link_to 'Sign Up', new_user_registration_path, class:'nav-link' %>
+              </li>
+            <% end %>
+        </ul>
+      </div>
+    </nav>
+
     <%= yield %>
+    </div>
+    
+    <div id="footer">
+      <div class="container">
+        <b>More Information</b>
+        <br />
+        <%= link_to 'TBD', '#' %>
+      </div>
+    </div>
   </body>
 </html>

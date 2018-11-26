@@ -1,13 +1,15 @@
-<h1>Pick Color</h1>
-<div class="container text-center">
-  <div class="row">
-    <%= simple_form_for @game do |f| %>
-      <%= f.input :black_player_user_id %>
-      <%= f.submit "Black Player", class: 'btn btn-primary' %>
-    <% end %>   
-    <%= simple_form_for @game do |f| %>
-      <%= f.input :white_player_user_id %>
-      <%= f.submit "White Player", class: 'btn btn-primary' %>
-    <% end %>   
-  </div>
+<br />
+<div class="booyah-box col-12">
+  <h1>Pick a color</h1>
+    <div class="row container">
+      <%= simple_form_for @game do |f| %>
+        <%= f.input :white_player_user_id, :as => :hidden, :input_html => { :value => current_user.id } %>
+        <%= f.submit "White Player", class: 'btn btn-primary' %>
+      <% end %>   
+      &nbsp; &nbsp; &nbsp;
+      <%= simple_form_for @game do |f| %>
+        <%= f.input :black_player_user_id, :as => :hidden, :input_html => { :value => current_user.id } %>
+        <%= f.submit "Black Player", class: 'btn btn-primary' %>
+      <% end %>   
+    </div>
 </div>

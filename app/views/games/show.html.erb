@@ -1,26 +1,29 @@
-<h1>Welcome to the game</h1>
+<div class="booyah-box col-12">
+  <h1>Welcome to the game</h1>
+  <%= link_to 'Forfeit?', game_path(@game), method: :delete, data: {confirm: 'Are you sure you want to delete this?'}, class: 'btn btn-danger' %>
 
-<div class="gameBoard">
-  <table>
-    <tbody>
-      <% 8.times do |row| %>
-        <tr>
-          <% 8.times do |col|%>
+  <div class="gameBoard">
+    <table>
+      <tbody>
+        <% 8.times do |row| %>
+          <tr>
+            <% 8.times do |col|%>
 
-            <% piece = @game.pieces.
-              where(
-              x_pos: row, 
-              y_pos: col 
-              ).first %>
+              <% piece = @game.pieces.
+                where(
+                x_pos: row, 
+                y_pos: col 
+                ).first %>
 
-            <% if (row+col) % 2 == 0 %>
-              <td id="piece_<%= piece ? piece.type : "none" %>" class="whiteSquare"> <%= piece ? piece.symbol : ""  %> </td>
-            <% else %>
-              <td id="piece_<%= piece ? piece.type : "none" %>" class="blackSquare"> <%= piece ? piece.symbol : ""  %> </td>
-            <% end %>        
-          <% end %>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+              <% if (row+col) % 2 == 0 %>
+                <td id="piece_<%= piece ? piece.type : "none" %>" class="whiteSquare"> <%= piece ? piece.symbol : ""  %> </td>
+              <% else %>
+                <td id="piece_<%= piece ? piece.type : "none" %>" class="blackSquare"> <%= piece ? piece.symbol : ""  %> </td>
+              <% end %>        
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>

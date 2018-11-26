@@ -1,6 +1,5 @@
 class Knight < Piece
   def valid_move?(x_new, y_new)
-    return false if move_type(x_new, y_new) == :invalid
     return false if !(game.piece_present(x_new, y_new).nil?) && game.piece_present(x_new, y_new).color == self.color
     # pulls the absolute value of the distance of the 
     # new space from the user's selected space
