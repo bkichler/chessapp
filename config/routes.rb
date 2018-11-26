@@ -8,4 +8,5 @@ Rails.application.routes.draw do
     end
     resources :pieces
   end
+  resources :pieces, only: [:update]
 end
