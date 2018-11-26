@@ -13,4 +13,8 @@ class Knight < Piece
       false
     end
   end
+
+  def symbol
+    self.color ? '♘' : '♞'
+  end
 end

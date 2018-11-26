@@ -7,15 +7,25 @@
 }
 
 .whiteSquare {
-  background-color: white;
+  background-color: #F0D9B5;
   height: 50px;
   width: 50px;
   border-style: solid;
 }
 
 .blackSquare {
-  background-color: black;
+  background-color: #B58863;
   height: 50px;
   width: 50px;
   border-style: solid;
 }
+
+td[id^='piece_'] {
+  text-align: center;
+  font-size: 20px;
+}
+
+#piece_Pawn {
+  font-size: 12px !important;
+}
+

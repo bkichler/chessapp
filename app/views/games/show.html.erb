@@ -1,21 +1,5 @@
 <h1>Welcome to the game</h1>
 
-<script type='text/javascript'>
-  // 1. Need to allow drag/drop
-  // 2. Get list of pieces in current game
-  // 3. Need to snap into new position
-
-  $(function() {
-    $.getJSON("/pieces.json", currentGamePieces);
-    
-
-  });
-
-  // $(function() {
-  //    $('#piece').draggable();
-  // });
-</script>
-
 <div class="gameBoard">
   <table>
     <tbody>
@@ -23,16 +7,16 @@
         <tr>
           <% 8.times do |col|%>
 
-            <% pieces = @game.pieces.
+            <% piece = @game.pieces.
               where(
               x_pos: row, 
               y_pos: col 
-              ) %>
+              ).first %>
 
             <% if (row+col) % 2 == 0 %>
-              <td id="row: <%= row %> col: <%= col %>" class="whiteSquare"> <%= pieces.map { |p| [p.color ? 'White' : 'Black', p.type] } %> </td>
+              <td id="piece_<%= piece ? piece.type : "none" %>" class="whiteSquare"> <%= piece ? piece.symbol : ""  %> </td>
             <% else %>
-              <td id="row: <%= row %> col: <%= col %>" class="blackSquare"> <%= pieces.map { |p| [p.color ? 'White' : 'Black', p.type] } %> </td>
+              <td id="piece_<%= piece ? piece.type : "none" %>" class="blackSquare"> <%= piece ? piece.symbol : ""  %> </td>
             <% end %>        
           <% end %>
         </tr>
