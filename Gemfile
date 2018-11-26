@@ -23,7 +23,7 @@ gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
-gem 'turbolinks', '~> 5'
+# gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
@@ -64,10 +64,13 @@ gem 'simple_form'
 gem 'bootstrap', '~> 4.1.3'
 # Bootstrap Javascript depends on jQuery... added jquery rails gem too
 gem 'jquery-rails'
+# Also add jquery-ui to get access to ui methods
+gem 'jquery-ui-rails'
 # Adding Rubocop for Ruby syntax linting
 gem 'rubocop-rails_config'
 
 # Upgrading loofah gem to 2.2.3 due to security vulnerability flagged in Github
 gem 'loofah', ">=2.2.3"
+
 
 

@@ -86,4 +86,8 @@ class Piece < ApplicationRecord
   def piece_color
     self.color
   end
+
+  def symbol
+    self.color ? 'X' : 'Y'
+  end
 end

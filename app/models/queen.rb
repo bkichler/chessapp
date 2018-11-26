@@ -7,4 +7,8 @@ class Queen < Piece
   #will eventually add capture move logic
   def capture_move?(x_new, y_new)
   end
+
+  def symbol
+    self.color ? '♕' : '♛'
+  end
 end

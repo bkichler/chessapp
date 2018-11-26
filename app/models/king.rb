@@ -13,4 +13,8 @@ class King < Piece
     # if it's not a legal king move, returns false
     false
   end
+
+  def symbol
+    self.color ? '♔' : '♚'
+  end
 end
