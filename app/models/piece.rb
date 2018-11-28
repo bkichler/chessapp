@@ -3,14 +3,10 @@ class Piece < ApplicationRecord
   belongs_to :user, optional: true
   has_many :moves
 
-<<<<<<< HEAD
   def within_bounds?(x_new, y_new)
     x_new >= 0 && y_new >= 0 && x_new <= 7 && y_new <= 7
   end
 
-=======
- 
->>>>>>> update piece controller & show.html.erb
   def valid_move?(x_new, y_new)
     return false if move_type(x_new, y_new) == :invalid
     true
@@ -89,5 +85,9 @@ class Piece < ApplicationRecord
 
   def piece_color
     self.color
+  end
+
+  def symbol
+    self.color ? 'X' : 'Y'
   end
 end
