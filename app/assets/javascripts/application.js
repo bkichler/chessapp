@@ -9,10 +9,11 @@
 //
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
+// 
+// Per jquery-rails documentation, jquery-ujs not needed if Rails version >=5.1
 //
-//= require jquery
-//= require jquery_ujs
 //= require rails-ujs
-//= require turbolinks
+//= require jquery
+//= require jquery-ui
 //= require bootstrap-sprockets
 //= require_tree .

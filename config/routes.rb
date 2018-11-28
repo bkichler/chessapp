@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       patch :join_as_black, :join_as_white
       put :join_as_black, :join_as_white
     end
+    resources :pieces
   end
   resources :pieces, only: [:update]
 end

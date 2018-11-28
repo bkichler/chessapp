@@ -1,5 +1,9 @@
 class PiecesController < ApplicationController
   
+  def index
+    render json: Piece.order(:id)
+  end  
+  
   def create
     @pieces = current_game.pieces.create(piece_params)
   end
@@ -9,11 +13,11 @@ class PiecesController < ApplicationController
     @piece = @game.pieces
   end
 
- def update
-  @piece = Piece.find(params[:id])
-  @piece.update_attributes(piece_params)
-  redirect_to game_path
- end
+  def update
+    piece = Piece.find(params[:id])
+    piece.update_attributes(piece_params)
+    render json: piece
+  end
 
   private
 
@@ -23,8 +27,7 @@ class PiecesController < ApplicationController
   end
 
   def piece_params
-    params.require(:piece).permit(:x_pos, :y_pos)
+    params.require(:piece).permit(:game_id, :user_id, :type, :color, :x_pos, :y_pos)
   end
 end
 
-##redirect_to games_url(game_id, selected_piece_id: params[:id]) 

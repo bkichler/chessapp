@@ -37,4 +37,8 @@ class Pawn < Piece
     x_diff = x_diff(x_new)
     x_diff != 0
   end
+
+  def symbol
+    self.color ? '♙' : '♟'
+  end
 end

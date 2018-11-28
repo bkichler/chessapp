@@ -7,4 +7,8 @@ class Rook < Piece
       return false
     end
   end
+
+  def symbol
+    self.color ? '♖' : '♜'
+  end
 end
