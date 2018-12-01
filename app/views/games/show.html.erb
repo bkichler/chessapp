@@ -3,6 +3,12 @@
 <script>
 
 $( document ).ready(function() {
+  // Select p children where id not empty
+  // Make them draggable
+  var blackPieces = $( "td > p" ).filter(function( index ) {
+    return $( this ).attr( "id:contains('black')" ) !== "empty";
+    });
+  
   $( "td > p" ).filter(function( index ) {
     return $( this ).attr( "id" ) !== "empty";
     }).draggable();
