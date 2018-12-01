@@ -24,9 +24,9 @@ $( document ).ready(function() {
               ).first %>
 
             <% if (row+col) % 2 == 0 %>
-              <td id="<%= piece ? "occupied" : "unoccupied" %>" class="whiteSquare"> <p id="<%= piece ? piece.type : "empty" %>"><%= piece ? piece.symbol : ""  %></p> </td>
+              <td id="<%= piece ? "occupied" : "unoccupied" %>" class="whiteSquare"> <p id="<%= piece ? piece.type + "_" + piece.piece_color : "empty" %>"><%= piece ? piece.symbol : ""  %></p> </td>
             <% else %>
-              <td id="<%= piece ? "occupied" : "unoccupied" %>" class="blackSquare"> <p id="<%= piece ? piece.type : "empty" %>"><%= piece ? piece.symbol : ""  %></p> </td>
+              <td id="<%= piece ? "occupied" : "unoccupied" %>" class="blackSquare"> <p id="<%= piece ? piece.type + "_" + piece.piece_color : "empty" %>"><%= piece ? piece.symbol : ""  %></p> </td>
             <% end %>        
           <% end %>
         </tr>
