@@ -26,5 +26,16 @@
       </tbody>
     </table>
   </div>
+
+  <div class="moveForm">
+    <%= form_tag move_game_path do %>
+      <%= hidden_field_tag "access_token", @access_token %>
+      <%= text_field_tag "start_x", nil, class: "form-control", placeholder: "Starting X (Vertical)" %>
+      <%= text_field_tag "start_y", nil, class: "form-control", placeholder: "Starting Y (Vertical)" %>
+      <%= text_field_tag "end_x", nil, class: "form-control", placeholder: "Ending X (Vertical)" %>
+      <%= text_field_tag "end_y", nil, class: "form-control", placeholder: "Ending Y (Vertical)" %>
+      <%= submit_tag "Make a Move", class: "btn btn-danger" %>
+    <% end %>
+  </div>
 </div>
 
