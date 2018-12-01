@@ -3,8 +3,9 @@
 <script>
 
 $( document ).ready(function() {
-  console.log("Hello there");
-  $( "#piece_Pawn" ).draggable();
+  $( "td > p" ).filter(function( index ) {
+    return $( this ).attr( "id" ) !== "empty";
+    }).draggable();
   });
 
 </script>
