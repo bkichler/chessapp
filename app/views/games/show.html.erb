@@ -1,7 +1,12 @@
 <h1>Welcome to the game</h1>
 
 <script>
-  
+
+$( document ).ready(function() {
+  console.log("Hello there");
+  $( "#piece_Pawn" ).draggable();
+  });
+
 </script>
 
 <div class="gameBoard">
@@ -18,9 +23,9 @@
               ).first %>
 
             <% if (row+col) % 2 == 0 %>
-              <td id="piece_<%= piece ? piece.type : "none" %>" class="whiteSquare"> <%= piece ? piece.symbol : ""  %> </td>
+              <td id="<%= piece ? "occupied" : "unoccupied" %>" class="whiteSquare"> <p id="<%= piece ? piece.type : "empty" %>"><%= piece ? piece.symbol : ""  %></p> </td>
             <% else %>
-              <td id="piece_<%= piece ? piece.type : "none" %>" class="blackSquare"> <%= piece ? piece.symbol : ""  %> </td>
+              <td id="<%= piece ? "occupied" : "unoccupied" %>" class="blackSquare"> <p id="<%= piece ? piece.type : "empty" %>"><%= piece ? piece.symbol : ""  %></p> </td>
             <% end %>        
           <% end %>
         </tr>

@@ -20,12 +20,17 @@
   border-style: solid;
 }
 
-td[id^='piece_'] {
+td[id$='occupied'] {
   text-align: center;
+  vertical-align: middle;
   font-size: 20px;
 }
 
-#piece_Pawn {
+#Pawn {
   font-size: 12px !important;
+}
+
+td p {
+  margin: 0 0 0 0;
 }
 
