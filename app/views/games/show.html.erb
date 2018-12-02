@@ -5,15 +5,29 @@
 $( document ).ready(function() {
   // Select p children where id not empty
   // Make them draggable
-  var blackPieces = $( "td > p" ).filter(function( index ) {
-    return $( this ).attr( "id:contains('black')" ) !== "empty";
-    });
-  
-  $( "td > p" ).filter(function( index ) {
-    return $( this ).attr( "id" ) !== "empty";
-    }).draggable();
-  });
 
+  var boardPieces = $( "td > p" ).filter(function( index ) {
+      return $( this ).attr( "id" ) !== "empty";
+    });
+  var emptySquares = $( "td#unoccupied" );
+
+  $( boardPieces ).draggable({
+      revert: "invalid",
+      containment: "document",
+      cursor: "move"
+    });
+
+  $( emptySquares ).droppable({
+    tolerance: "fit",
+    accept: "td > p",
+    // classes: {
+    //     "ui-droppable-active": "ui-state-highlight"
+    // },
+    drop: function () {
+      alert( "dropped" );
+     } 
+  });
+});
 </script>
 
 <div class="gameBoard">
