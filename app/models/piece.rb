@@ -1,4 +1,6 @@
 class Piece < ApplicationRecord
+  after_initialize :starting_state
+
   belongs_to :game, optional: true
   belongs_to :user, optional: true
   has_many :moves
@@ -18,7 +20,7 @@ class Piece < ApplicationRecord
   def x_diff(x)
     (x - x_pos).abs
   end
-  
+   
   # same as above but for y position
   def y_diff(y)
     (y - y_pos).abs
@@ -74,7 +76,7 @@ class Piece < ApplicationRecord
     return raise "Invalid move" if !valid_move?(x_new, y_new)
     occupant = game.piece_present(x_new, y_new)
     current_piece = game.pieces.where(x_pos: x_pos, y_pos: y_pos).first
-    if occupant.nil?
+    if occupant.nil? 
       current_piece.update_attributes(x_pos: x_new, y_pos: y_new)
     elsif occupant.color != current_piece.color
       current_piece.update_attributes(x_pos: x_new, y_pos: y_new)
@@ -89,5 +91,9 @@ class Piece < ApplicationRecord
 
   def symbol
     self.color ? 'X' : 'Y'
+  end
+
+  def starting_state
+    self.state ||= 'unmoved'
   end
 end

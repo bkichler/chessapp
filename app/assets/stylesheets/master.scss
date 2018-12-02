@@ -10,14 +10,12 @@
   background-color: #F0D9B5;
   height: 50px;
   width: 50px;
-  border-style: solid;
 }
 
 .blackSquare {
   background-color: #B58863;
   height: 50px;
   width: 50px;
-  border-style: solid;
 }
 
 .booyah-box {
@@ -26,10 +24,11 @@
 
 td[id^='piece_'] {
   text-align: center;
-  font-size: 20px;
+  font-size: 32px;
+  background-size: 32px !important;
 }
 
 #piece_Pawn {
-  font-size: 12px !important;
+  font-size: 32px !important;
 }
 

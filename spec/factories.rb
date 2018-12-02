@@ -27,4 +27,8 @@ FactoryBot.define do
     y_pos { 0 }
     color { true }
   end
+
+  factory :rook do
+  end
+
 end
