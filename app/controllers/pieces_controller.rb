@@ -1,4 +1,5 @@
 class PiecesController < ApplicationController
+  skip_before_action :verify_authenticity_token
   before_action :set_game!
 
   def index
@@ -6,9 +7,9 @@ class PiecesController < ApplicationController
   end
 
   def update
-    piece = @game.pieces.find(params[:id])
-    piece.update_attributes(piece_params)
-    render json: piece
+    @piece = @game.pieces.find(params[:id])
+    @piece.update_attributes(piece_params)
+    render json: @piece
   end
 
   private
