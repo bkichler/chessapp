@@ -28,8 +28,8 @@ class Piece < ApplicationRecord
 
   def move_type(x_new, y_new)
     # Need to deal with Knight case
-    vertical_delta = (x_new - x_pos).abs
-    horizontal_delta = (y_new - y_pos).abs
+    vertical_delta = (y_new - y_pos).abs
+    horizontal_delta = (x_new - x_pos).abs
 
     return :horizontal if horizontal_delta > 0 && vertical_delta.zero?
     return :vertical if vertical_delta > 0 && horizontal_delta.zero?

@@ -2,7 +2,7 @@ class King < Piece
   def valid_move?(x_new, y_new)
     king_move = move_type(x_new, y_new)
     return false if king_move == :invalid || king_move == :knight
-    return false if is_obstructed?(x_new, y_new) || !can_castle(x_new)
+    return false if is_obstructed?(x_new, y_new)
     return false if !within_bounds?(x_new, y_new)
 
     # pulls the distance of the new space from

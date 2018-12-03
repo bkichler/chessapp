@@ -28,8 +28,8 @@ def create_white_pieces
   8.times do |i|
     Pawn.create(
       :game_id => self.id,
-      :x_pos => 1,
-      :y_pos => i,
+      :x_pos => i,
+      :y_pos => 1,
       :color => true
     )
   end
@@ -42,44 +42,44 @@ def create_white_pieces
   )
   Rook.create(
     :game_id => self.id,
-    :x_pos => 0,
-    :y_pos => 7,
+    :x_pos => 7,
+    :y_pos => 0,
     :color => true
   )
   Knight.create(
     :game_id => self.id,
-    :x_pos => 0,
-    :y_pos => 1,
+    :x_pos => 1,
+    :y_pos => 0,
     :color => true
   )
   Knight.create(
     :game_id => self.id,
-    :x_pos => 0,
-    :y_pos => 6,
+    :x_pos => 6,
+    :y_pos => 0,
     :color => true
   )
   Bishop.create(
     :game_id => self.id,
-    :x_pos => 0,
-    :y_pos => 2,
+    :x_pos => 2,
+    :y_pos => 0,
     :color => true
   )
   Bishop.create(
     :game_id => self.id,
-    :x_pos => 0,
-    :y_pos => 5,
+    :x_pos => 5,
+    :y_pos => 0,
     :color => true
   )
   Queen.create(
     :game_id => self.id,
-    :x_pos => 0,
-    :y_pos => 4,
+    :x_pos => 4,
+    :y_pos => 0,
     :color => true
   )
   King.create(
     :game_id => self.id,
-    :x_pos => 0,
-    :y_pos => 3,
+    :x_pos => 3,
+    :y_pos => 0,
     :color => true
   )
 end
@@ -89,15 +89,15 @@ def create_black_pieces
   8.times do |y|
     Pawn.create(
       :game_id => self.id,
-      :x_pos => 6,
-      :y_pos => y,
+      :x_pos => y,
+      :y_pos => 6,
       :color => false
     )
   end
   Rook.create(
     :game_id => self.id,
-    :x_pos => 7,
-    :y_pos => 0,
+    :x_pos => 0,
+    :y_pos => 7,
     :color => false
   )
   Rook.create(
@@ -108,38 +108,38 @@ def create_black_pieces
   )
   Knight.create(
     :game_id => self.id,
-    :x_pos => 7,
-    :y_pos => 1,
+    :x_pos => 1,
+    :y_pos => 7,
     :color => false
   )
   Knight.create(
     :game_id => self.id,
-    :x_pos => 7,
-    :y_pos => 6,
+    :x_pos => 6,
+    :y_pos => 7,
     :color => false
   )
   Bishop.create(
     :game_id => self.id,
-    :x_pos => 7,
-    :y_pos => 2,
+    :x_pos => 2,
+    :y_pos => 7,
     :color => false
   )
   Bishop.create(
     :game_id => self.id,
-    :x_pos => 7,
-    :y_pos => 5,
+    :x_pos => 5,
+    :y_pos => 7,
     :color => false
   )
   Queen.create(
     :game_id => self.id,
-    :x_pos => 7,
-    :y_pos => 4,
+    :x_pos => 4,
+    :y_pos => 7,
     :color => false
   )
   King.create(
     :game_id => self.id,
-    :x_pos => 7,
-    :y_pos => 3,
+    :x_pos => 3,
+    :y_pos => 7,
     :color => false
   )
 end

@@ -9,9 +9,9 @@
   <div class="gameBoard">
     <table>
       <tbody>
-        <% 8.times do |row| %>
+        <% 8.times do |col| %>
           <tr>
-            <% 8.times do |col|%>
+            <% 8.times do |row|%>
 
               <% piece = @game.pieces.
                 where(
