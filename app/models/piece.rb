@@ -73,7 +73,7 @@ class Piece < ApplicationRecord
     # Will raise error if move is invalid
     return raise "Invalid move" if !valid_move?(x_new, y_new)
     occupant = game.piece_present(x_new, y_new)
-    #current_piece = game.pieces.where(x_pos: x_pos, y_pos: y_pos).first
+    current_piece = game.pieces.where(x_pos: x_pos, y_pos: y_pos).first
     if occupant.nil?
       current_piece.update_attributes(x_pos: x_new, y_pos: y_new)
     elsif occupant.color != current_piece.color

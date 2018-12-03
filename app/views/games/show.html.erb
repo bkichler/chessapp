@@ -19,7 +19,8 @@
                 <td id="piece_<%= piece ? piece.type : "none" %>" class="whiteSquare"> <%= piece ? piece.symbol : ""  %> </td>
               <% else %>
                 <td id="piece_<%= piece ? piece.type : "none" %>" class="blackSquare"> <%= piece ? piece.symbol : ""  %> </td>
-              <% end %>        
+              <% end %>    
+                  
             <% end %>
           </tr>
         <% end %>
@@ -30,10 +31,10 @@
   <div class="moveForm">
     <%= form_tag move_game_path do %>
       <%= hidden_field_tag "access_token", @access_token %>
-      <%= text_field_tag "start_x", nil, class: "form-control", placeholder: "Starting X (Vertical)" %>
-      <%= text_field_tag "start_y", nil, class: "form-control", placeholder: "Starting Y (Vertical)" %>
-      <%= text_field_tag "end_x", nil, class: "form-control", placeholder: "Ending X (Vertical)" %>
-      <%= text_field_tag "end_y", nil, class: "form-control", placeholder: "Ending Y (Vertical)" %>
+      <%= number_field_tag "start_x", nil, class: "form-control", placeholder: "Starting X (Vertical)"%>
+      <%= number_field_tag "start_y", nil, class: "form-control", placeholder: "Starting Y (Horizontal)" %>
+      <%= number_field_tag "end_x", nil, class: "form-control", placeholder: "Ending X (Vertical)" %>
+      <%= number_field_tag "end_y", nil, class: "form-control", placeholder: "Ending Y (Horizontal)" %>
       <%= submit_tag "Make a Move", class: "btn btn-danger" %>
     <% end %>
   </div>

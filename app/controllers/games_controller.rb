@@ -1,5 +1,5 @@
 class GamesController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy, :join_as_black, :join_as_white]
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy, :join_as_black, :join_as_white, :move]
 
   def new
     @game = Game.new
@@ -46,9 +46,10 @@ class GamesController < ApplicationController
 
   def move
     @game = Game.find(params[:id])
-    piece = @game.pieces.where(x_pos: params[:start_x], y_pos: params[:start_y]) # find the piece to move
-    piece.move_to!(params[:end_x], params[:end_y])
-    # piece.update(x_pos: params[:end_x], y_pos: params[:end_y])                   # update the piece's position to the new position
+    @piece = Piece.where(game_id: params[:id], x_pos: params[:start_x], y_pos: params[:start_y]).first
+    #@piece = @game.pieces.where(x_pos: params[:start_x], y_pos: params[:start_y]) # find the piece to move
+    @piece.move_to!(params[:end_x].to_i, params[:end_y].to_i)
+    #@piece.update(x_pos: params[:end_x], y_pos: params[:end_y])                   # update the piece's position to the new position
     redirect_to game_path(@game.id)                                              # refresh the page ot show new position
   end
 
