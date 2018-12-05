@@ -11,25 +11,38 @@ $( document ).ready(function() {
   //Make pieces draggable
   $( $boardPieces ).draggable({
       revert: "invalid",
-      containment: "document",
+      containment: "table",
       cursor: "crosshair"
     });
   //Make empty squares droppable
   $( $emptySquares ).droppable({
-    tolerance: "fit",
-    accept: "td > p",
+    tolerance: "intersect",
+    accept: $boardPieces,
     drop: function ( event, ui ) {
       var currentCol = $( ui.draggable ).parent();
-      console.log( "Current column is " + $( currentCol ).data( "id" ));
+        console.log( "Current column is " + $( currentCol ).data( "id" ));
       var currentRow = $( currentCol ).parent();
-      console.log( "Current row is " + $( currentRow ).data( "id" ));
-      var newXpos = $(event.target).parent().data( "id" );
-      console.log( "New row is " + newXpos );
-      var newYpos = $(event.target).data( "id" );
-      console.log( "New col is " + newYpos );
-      var currentPieceID = $(ui.draggable).data( "id" );
-      movePiece( currentPieceID, newYpos, newXpos);
-      $( this ).append(ui.draggable);
+        console.log( "Current row is " + $( currentRow ).data( "id" ));
+      var newCol = $( event.target );
+        console.log( "New col is " + newCol.data( "id" ) );
+      var newRow = $( newCol ).parent();
+        console.log( "New row is " + newRow.data( "id" ) );
+      var currentPiece = $(ui.draggable);
+      //Update piece position
+      var gameId = $( ".gameBoard" ).data( "id" );
+        $.post("/games/" + gameId + "/pieces/" + $( currentPiece ).data( "id"), {
+          _method: "PUT",
+          piece: {
+            x_pos: newRow.data( "id" ),
+            y_pos: newCol.data( "id" )
+          }
+        }).success( function( data ) {
+          $( newCol ).append( ui.draggable );
+          console.log( $( currentRow ).prev( "td" ) );
+          $( currentRow ).prev( "td" ).attr( "id", "unoccupied" );
+          console.log(  $( newRow ).prev( "td" ).attr( "id" ) );
+          $( newRow ).prev( "td" ).attr( "id", "occupied" );
+        });       
      } 
   });
   //Attach delegated event handler
@@ -42,20 +55,6 @@ $( document ).ready(function() {
     var pElement = '<p id="' + piece.type + '_' + piece.piece_color + '"' + 
       ' data-id="' + piece.id + '">';
     return pElement;
-  };
-  //Create function to update piece position
-  function movePiece( pieceId, new_x_pos, new_y_pos ) {
-    var gameId = $( ".gameBoard" ).data( "id" );
-    $.post("/games/" + gameId + "/pieces/" + pieceId, {
-      _method: "PUT",
-      piece: {
-        x_pos: new_x_pos,
-        y_pos: new_y_pos
-      }
-    }).success( function( data ) {
-      var currentPiece = $( this );
-      console.log( currentPiece[0] );
-    });       
   };
 });
 </script>
@@ -74,17 +73,21 @@ $( document ).ready(function() {
               ).first %>
 
             <% if (row+col) % 2 == 0 %>
-              <td id="<%= piece ? "occupied" : "unoccupied" %>" class="whiteSquare" data-id="<%= col %>">
                 <% if piece %> 
-                  <p id="<%= piece ? piece.type + "_" + piece.piece_color : "" %>" data-id="<%= piece ? piece.id : "" %>"><%= piece ? piece.symbol : ""  %></p>
+                  <td id="occupied" class="whiteSquare" data-id="<%= col %>">
+                    <p id="<%= piece ? piece.type + "_" + piece.piece_color : "" %>" data-id="<%= piece ? piece.id : "" %>"><%= piece ? piece.symbol : ""  %></p>
+                  </td>
+                <% else %>
+                  <td id="unoccupied" class="whiteSquare" data-id="<%= col %>"></td>
                 <% end %>
-              </td>
             <% else %>
-              <td id="<%= piece ? "occupied" : "unoccupied" %>" class="blackSquare" data-id="<%= col %>">
-                <% if piece %>  
-                  <p id="<%= piece ? piece.type + "_" + piece.piece_color : "" %>" data-id="<%= piece ? piece.id : "" %>"><%= piece ? piece.symbol : ""  %></p>
+                <% if piece %> 
+                  <td id="occupied" class="blackSquare" data-id="<%= col %>">
+                    <p id="<%= piece ? piece.type + "_" + piece.piece_color : "" %>" data-id="<%= piece ? piece.id : "" %>"><%= piece ? piece.symbol : ""  %></p>
+                  </td>
+                <% else %>
+                  <td id="unoccupied" class="blackSquare" data-id="<%= col %>"></td>
                 <% end %>
-              </td>
             <% end %>        
           <% end %>
         </tr>
