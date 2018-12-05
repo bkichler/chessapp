@@ -74,11 +74,11 @@ class King < Piece
   def castle!(x_new) #x_new is kings new position
     # puts "castle! METHOD"
     if x_new > x_pos
-      rook = rook_side('King')
-      rook_x = x_new + 1
-    else
       rook = rook_side('Queen')
       rook_x = x_new - 1
+    else
+      rook = rook_side('King')
+      rook_x = x_new + 1
     end
 
     rook.update_attributes!(x_pos: rook_x)
