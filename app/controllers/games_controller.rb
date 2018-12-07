@@ -48,14 +48,14 @@ class GamesController < ApplicationController
     redirect_to root_path
   end
 
-  def move
-    @game = Game.find(params[:id])
-    @piece = Piece.where(game_id: params[:id], x_pos: params[:start_x], y_pos: params[:start_y]).first
-    #@piece = @game.pieces.where(x_pos: params[:start_x], y_pos: params[:start_y]) # find the piece to move
-    @piece.move_to!(params[:end_x].to_i, params[:end_y].to_i)
-    #@piece.update(x_pos: params[:end_x], y_pos: params[:end_y])                   # update the piece's position to the new position
-    redirect_to game_path(@game.id)                                              # refresh the page ot show new position
-  end
+  # def move
+  #   @game = Game.find(params[:id])
+  #   @piece = Piece.where(game_id: params[:id], x_pos: params[:start_x], y_pos: params[:start_y]).first
+  #   #@piece = @game.pieces.where(x_pos: params[:start_x], y_pos: params[:start_y]) # find the piece to move
+  #   @piece.move_to!(params[:end_x].to_i, params[:end_y].to_i)
+  #   #@piece.update(x_pos: params[:end_x], y_pos: params[:end_y])                   # update the piece's position to the new position
+  #   redirect_to game_path(@game.id)                                              # refresh the page ot show new position
+  # end
 
   private
 
@@ -63,7 +63,7 @@ class GamesController < ApplicationController
     params.require(:game).permit(:black_player_user_id, :white_player_user_id, :turn_user_id, :game_id)
   end
 
-  def move_params
-    params.require(:game).permit(:start_x, :start_y, :end_x, :end_y, :game_id)
-  end
+  # def move_params
+  #   params.require(:game).permit(:start_x, :start_y, :end_x, :end_y, :game_id)
+  # end
 end
