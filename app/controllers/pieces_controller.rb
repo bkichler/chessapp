@@ -19,6 +19,10 @@ class PiecesController < ApplicationController
     render json: piece
   end
 
+  def move
+
+  end
+
   private
 
   helper_method :current_game
