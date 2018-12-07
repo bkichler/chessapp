@@ -17,7 +17,10 @@ class PiecesController < ApplicationController
   end
 
   def move
-
+    @piece = @game.pieces.where(game_id: params[:id], x_pos: params[:start_x], y_pos: params[:start_y]).first
+    @piece.move_to!(params[:end_x].to_i, params[:end_y].to_i)
+    @piece.update_attributes(piece_params)
+    render json: @piece
   end
 
   private
@@ -25,14 +28,13 @@ class PiecesController < ApplicationController
   def set_game!
     @game = Game.find(params[:game_id])
   end
-    
-  helper_method :current_game
-  def current_game
-    @current_game ||= Game.find(params[:id])
-  end
 
   def piece_params
     params.require(:piece).permit(:game_id, :user_id, :type, :color, :x_pos, :y_pos)
+  end
+
+  def move_params
+    params.require(:piece).permit(:start_x, :start_y, :end_x, :end_y, :game_id)
   end
 end
 
