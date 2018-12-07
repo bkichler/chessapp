@@ -34,9 +34,10 @@ $( document ).ready(function() {
             y_pos: newCol.data( "id" )
           }
         }).success( function( data ) {
-          $( newCol ).append( ui.draggable );
-          console.log( $( currentRow ).prev( "td" ) );
+          console.log( data );
+          console.log( $( currentRow ).prev().prop( 'lastElementChild' ));
           $( currentRow ).prev( "td" ).attr( "id", "unoccupied" );
+          console.log( $( currentRow ).prev( "td" ).attr( "id") );
           console.log(  $( newRow ).prev( "td" ).attr( "id" ) );
           $( newRow ).prev( "td" ).attr( "id", "occupied" );
         });       
@@ -96,7 +97,7 @@ $( document ).ready(function() {
     </table>
   </div>
   <div class="moveForm">
-    <%= form_tag move_game_path do %>
+    <%= form_tag move_game_piece_path(@game) do %>
       <%= hidden_field_tag "access_token", @access_token %>
       <%= number_field_tag "start_x", nil, class: "form-control", placeholder: "Starting X (Vertical)"%>
       <%= number_field_tag "start_y", nil, class: "form-control", placeholder: "Starting Y (Horizontal)" %>
