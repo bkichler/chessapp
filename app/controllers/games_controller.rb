@@ -7,7 +7,7 @@ class GamesController < ApplicationController
 
   def create
     @game = Game.create(game_params)
-    redirect_to game_path(@game)
+    redirect_to root_path
   end
 
   def show
@@ -26,6 +26,8 @@ class GamesController < ApplicationController
     @game = Game.find(params[:id])
     return render_not_found if @game.nil?
     @game.update_attribute(:black_player_user_id, current_user.id)
+    # May need to remove one of these methods - BK
+    @game.populate_game!
     @game.set_player_ids
     redirect_to game_path(@game.id)
   end
@@ -34,6 +36,8 @@ class GamesController < ApplicationController
     @game = Game.find(params[:id])
     return render_not_found if @game.nil?
     @game.update_attribute(:white_player_user_id, current_user.id)
+    # May need to remove one of these methods - BK
+    @game.populate_game!
     @game.set_player_ids
     redirect_to game_path(@game.id)
   end
