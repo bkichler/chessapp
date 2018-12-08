@@ -30,7 +30,6 @@ class Piece < ApplicationRecord
     # Need to deal with Knight case
     vertical_delta = (y_new - y_pos).abs
     horizontal_delta = (x_new - x_pos).abs
-
     return :horizontal if horizontal_delta > 0 && vertical_delta.zero?
     return :vertical if vertical_delta > 0 && horizontal_delta.zero?
     return :diagonal if vertical_delta == horizontal_delta
@@ -42,12 +41,15 @@ class Piece < ApplicationRecord
   end
 
   def is_obstructed?(x_new, y_new)
+    puts "IS OBSTRUCTED??"
     move_direction = move_type(x_new, y_new)
     pieces_in_row = game.pieces.where(x_pos: x_new)
     pieces_in_column = game.pieces.where(y_pos: y_new)
     # horizontal case
     if move_direction == :horizontal
+      puts "HELLO THERE, WE ARE IN THE HORIZONTAL MOVE DIRECTION"
       return false if pieces_in_row.where("#{x_new} > ? AND #{x_new} < ?", [x_pos, x_new].min, [x_pos, x_new].max).empty?
+      puts "HELLO THERE, WE ARE IN THE HORIZONTAL MOVE DIRECTION PART 2"
     # vertical case
     elsif move_direction == :vertical
       return false if pieces_in_column.where("#{y_new} > ? AND #{y_new} < ?", [y_pos, y_new].min, [y_pos, y_new].max).empty?
@@ -64,6 +66,7 @@ class Piece < ApplicationRecord
         end
       end
     end
+    puts "HELLO WE ARE IN THE NEXT STEP OF OBSTRUCTED"
     raise "Invalid move" if move_direction == :invalid
   end
 

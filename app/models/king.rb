@@ -19,15 +19,19 @@ class King < Piece
   end
 
   def valid_move_castle?(x_new, y_new)
-    # puts "valid_move_castle? METHOD"
+    puts "valid_move_castle? METHOD x_new: #{x_new} y_new: #{y_new}"
     king_move = move_type(x_new, y_new)
+    puts"THIS IS BEFORE: IS THE KING OBSTRUCTED? MOVE TYPE"
     return false if king_move == :invalid || king_move == :knight
     if king_move == :horizontal
+      puts"IS THE KING OBSTRUCTED? x_new: #{x_new}"
       !is_obstructed?(x_new, y_new) && within_bounds?(x_new, y_new)
+      puts"IS THE KING OBSTRUCTED? NEXT STEP!!!"
     else 
       return false
     end
 
+    puts "WE ARE NOT OBSTRUCTED!"
     # pulls the distance of the new space from
     # the user's selected space
     x_diff = x_diff(x_new).abs
@@ -46,7 +50,6 @@ class King < Piece
 
   def can_castle?(x_new) #x_new is kings new position
     #King side or Queen side
-    #puts "can_castle METHOD"
     if x_new > x_pos
       rook = rook_side('Queen')
     else
@@ -61,7 +64,6 @@ class King < Piece
   end
 
   def rook_side(side)
-    # puts "rook_side METHOD"
     if side == 'King'
       return game.pieces.find_by(type: 'Rook', x_pos: 0, y_pos: y_pos)
     elsif side == 'Queen'
@@ -72,7 +74,6 @@ class King < Piece
   end
 
   def castle!(x_new) #x_new is kings new position
-    # puts "castle! METHOD"
     if x_new > x_pos
       rook = rook_side('Queen')
       rook_x = x_new - 1

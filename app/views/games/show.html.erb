@@ -3,7 +3,9 @@
   <%= link_to 'Forfeit?', game_path(@game), method: :delete, data: {confirm: 'Are you sure you want to delete this?'}, class: 'btn btn-danger' %>
   <br />
   <br />
-  <%= link_to 'Castle Kingside', ks_castle_game_pieces_path(@piece), class: 'btn btn-primary' %>
+
+<button type="button" id="ksBtn" data-game-id="<%= @game.id %>"> Kingside Castle</button>
+<button type="button" id="qsBtn" data-game-id="<%= @game.id %>"> Queenside Castle</button>
 
   <div class="gameBoard">
     <table>

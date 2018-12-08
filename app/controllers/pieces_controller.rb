@@ -9,12 +9,12 @@ class PiecesController < ApplicationController
   end
 
   def show
-    @game = Game.find(params[:id])
+    @game = Game.find(params[:game_id])
     @piece = @game.pieces
   end
 
   def update
-    piece = Piece.find(params[:id])
+    piece = Piece.find(params[:game_id])
     piece.update_attributes(piece_params)
     render json: piece
   end
@@ -29,7 +29,7 @@ class PiecesController < ApplicationController
     king = kings[0]
     rook = rooks[0]
 
-    if king == nil || rook == null
+    if king == nil || rook == nil
       render json: {}, status: 500
       return
     end
@@ -55,7 +55,7 @@ class PiecesController < ApplicationController
     king = kings[0]
     rook = rooks[0]
 
-    if king == nil || rook == null
+    if king == nil || rook == nil
       render json: {}, status: 500
       return
     end
