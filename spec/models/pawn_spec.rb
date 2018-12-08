@@ -41,17 +41,17 @@ RSpec.describe Pawn, type: :model do
 	describe 'pawn valid_move? method' do
 		it 'should return false if move is horizontal' do
 			pawn = FactoryBot.create(:pawn)
-			expect(pawn.valid_move?(2, 1)).to eq(false)
+			expect(pawn.valid_move?(1, 2)).to eq(false)
 		end
 	
 		it 'should return true if move is forward 1' do
 			pawn = FactoryBot.create(:pawn)
-			expect(pawn.valid_move?(1, 2)).to eq(true)
+			expect(pawn.valid_move?(2, 1)).to eq(true)
 		end
 		
 		it 'shoudl return true if first move is forward 2' do
 			pawn = FactoryBot.create(:pawn)
-			expect(pawn.valid_move?(1, 3)).to eq(true)
+			expect(pawn.valid_move?(3, 1)).to eq(true)
 		end
 	end
 end
