@@ -17,7 +17,8 @@ class PiecesController < ApplicationController
   end
 
   def move
-    @piece = @game.pieces.where(game_id: params[:game_id], x_pos: params[:start_x], y_pos: params[:start_y]).first
+    @piece = @game.pieces.find(params[:id])
+    # @piece = @game.pieces.where(game_id: params[:game_id], x_pos: params[:start_x], y_pos: params[:start_y]).first
     @piece.move_to!(params[:end_x].to_i, params[:end_y].to_i)
     @piece.update_attributes(piece_params)
     render json: @piece
