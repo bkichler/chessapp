@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     end
     resources :pieces do
       member do
+        get :move_status
         patch :move
         put :move
       end

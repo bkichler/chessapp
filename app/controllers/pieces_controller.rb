@@ -18,10 +18,13 @@ class PiecesController < ApplicationController
 
   def move
     @piece = @game.pieces.find(params[:id])
-    # @piece = @game.pieces.where(game_id: params[:game_id], x_pos: params[:start_x], y_pos: params[:start_y]).first
-    @piece.move_to!(params[:end_x].to_i, params[:end_y].to_i)
-    @piece.update_attributes(piece_params)
-    render json: @piece
+    if @piece.valid_move?(params[:x_new].to_i, params[:y_new].to_i)
+      @piece.move_to!(params[:x_new], params[:y_new])
+      render json: @piece
+    else
+      @piece.move_to!(params[:x_new], params[:y_new])
+      render json: { status: "invalid" }
+    end
   end
 
   private
@@ -31,11 +34,7 @@ class PiecesController < ApplicationController
   end
 
   def piece_params
-    params.require(:piece).permit(:game_id, :user_id, :type, :color, :x_pos, :y_pos)
-  end
-
-  def move_params
-    params.require(:piece).permit(:start_x, :start_y, :end_x, :end_y, :game_id)
+    params.require(:piece).permit(:game_id, :user_id, :type, :color, :x_pos, :y_pos, :x_new, :y_new)
   end
 end
 

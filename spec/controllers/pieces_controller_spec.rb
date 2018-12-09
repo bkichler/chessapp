@@ -39,15 +39,13 @@ RSpec.describe PiecesController, type: :controller do
       put :join_as_black, params: { id: game.id, game: { black_player_user_id: user2.id } }
       game.reload
 
-      # Switch to piece controller, send put request to update method
+      # Switch to piece controller, send put request to move method
       @controller = PiecesController.new
       piece = game.pieces.where("x_pos = ? AND y_pos = ?", 6, 4).first
       put :move, params: { 
-                            game_id: game.id, 
-                            id: piece.id, 
+                            game_id: game.id,
+                            id: piece.id,
                             piece: { 
-                                      start_x: piece.x_pos, 
-                                      start_y: piece.y_pos,
                                       end_x: 5,
                                       end_y: 4
                                     }
