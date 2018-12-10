@@ -45,11 +45,9 @@ RSpec.describe PiecesController, type: :controller do
       put :move, params: { 
                             game_id: game.id,
                             id: piece.id,
-                            piece: { 
-                                      end_x: 5,
-                                      end_y: 4
-                                    }
-                            }
+                            x_new: 5,
+                            y_new: 4
+                          }
       piece.reload
       expect(piece.x_pos).to eq(5)
     end
