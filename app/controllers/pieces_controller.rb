@@ -10,6 +10,11 @@ class PiecesController < ApplicationController
     @pieces = current_game.pieces.create(piece_params)
   end
 
+  def show
+    @piece = @game.pieces.find(params[:id])
+    render json: @piece
+  end
+
   def update
     @piece = @game.pieces.find(params[:id])
     @piece.update_attributes(piece_params)
