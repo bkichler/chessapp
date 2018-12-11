@@ -10,6 +10,8 @@ class Piece < ApplicationRecord
   end
 
   def valid_move?(x_new, y_new)
+    x_new = x_new.to_i
+    y_new = y_new.to_i
     return false if move_type(x_new, y_new) == :invalid
     true
   end
@@ -75,8 +77,10 @@ class Piece < ApplicationRecord
   # this later to incorporate a piece status
   
   def move_to!(x_new, y_new)
+    x_new = x_new.to_i
+    y_new = y_new.to_i
     # Will raise error if move is invalid
-    return raise "Invalid move" if !valid_move?(x_new, y_new)
+    return raise "Invalid move for #{self.type} to #{x_new}, #{y_new}" if !valid_move?(x_new, y_new)
     occupant = game.piece_present(x_new, y_new)
     current_piece = game.pieces.where(x_pos: x_pos, y_pos: y_pos).first
     if occupant.nil? 

@@ -5,16 +5,16 @@ Rails.application.routes.draw do
     member do
       patch :join_as_black, :join_as_white
       put :join_as_black, :join_as_white
-      post :move
     end
     resources :pieces do
+      member do
+        patch :move
+        put :move
+      end
       collection do
         patch :ks_castle
         patch :qs_castle
       end
     end
   end
-  resources :pieces, only: [:update]
-
-  # get '/move', to: 'game#move',
 end

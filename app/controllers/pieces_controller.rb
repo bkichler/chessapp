@@ -11,8 +11,8 @@ class PiecesController < ApplicationController
   end
 
   def show
-    @game = Game.find(params[:game_id])
-    @piece = @game.pieces
+    @piece = @game.pieces.find(params[:id])
+    render json: @piece
   end
 
   def update
@@ -22,7 +22,14 @@ class PiecesController < ApplicationController
   end
 
   def move
-    
+    @piece = @game.pieces.find(params[:id])
+    if @piece.valid_move?(params[:x_new].to_i, params[:y_new].to_i)
+      @piece.move_to!(params[:x_new], params[:y_new])
+      render json: @piece
+    else
+      @piece.move_to!(params[:x_new], params[:y_new])
+      render json: { status: "invalid" }
+    end
   end
 
   def ks_castle
@@ -84,14 +91,9 @@ class PiecesController < ApplicationController
   def set_game!
     @game = Game.find(params[:game_id])
   end
-    
-  helper_method :current_game
-  def current_game
-    @current_game ||= Game.find(params[:id])
-  end
 
   def piece_params
-    params.require(:piece).permit(:game_id, :user_id, :type, :color, :x_pos, :y_pos, :state)
+    params.require(:piece).permit(:game_id, :user_id, :type, :color, :x_pos, :y_pos, :x_new, :y_new)
   end
 end
 
