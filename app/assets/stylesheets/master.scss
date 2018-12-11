@@ -3,7 +3,6 @@
 .gameBoard {
   padding: 20px;
   margin: 0px auto;
-
 }
 
 .whiteSquare {
@@ -28,7 +27,22 @@ td[id^='piece_'] {
   background-size: 32px !important;
 }
 
-#piece_Pawn {
-  font-size: 32px !important;
+td[id$='occupied'] {
+  text-align: center;
+  font-size: 32px;
+  background-size: 32px !important;
 }
 
+#piece_Pawn {
+  font-size: 32px !important;
+  vertical-align: middle;
+  font-size: 20px;
+}
+
+td p {
+  margin: 0 0 0 0;
+}
+
+p[id$='white'] {
+  color: white;
+}
