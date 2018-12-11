@@ -1,11 +1,12 @@
 class Pawn < Piece
   def valid_move?(x_new, y_new)
+    return true if capture_move?(x_new, y_new)
+    return false if is_obstructed?(x_new, y_new)
     return false if !within_bounds?(x_new, y_new)
     return false if backwards_move?(x_new)
-    # once capture move logic is complete, will add return true if capture_move(x_new, y_new)
-    return false if horizontal_move?(y_new)
-    # return false if is_obstructed?(x_new, y_new)
-    okay_length?(x_new)
+    return false if vertical_blocker?(x_new, y_new)
+    return false if horizontal_move?(x_new)
+    okay_length?(y_new)
   end
   
   def backwards_move?(x_new)
@@ -17,7 +18,12 @@ class Pawn < Piece
   
   # still need to add capture move logic
 
-  def capture_move(x_new, y_new)
+  def capture_move?(x_new, y_new)
+    target = game.pieces.where("x_pos = ? AND y_pos = ?", x_new, y_new).first
+    return false if target.nil?
+    if move_type(x_new, y_new) == :diagonal && x_diff(x_new) == 1 && y_diff(y_new) == 1
+      target.color != self.color && target.type != "King"
+    end
   end
   
   def first_move?(y_new)
@@ -26,16 +32,21 @@ class Pawn < Piece
     (color && y_pos == 1) || (!color && y_pos == 6)
   end
   
-  def okay_length?(x_new)
-    x_diff = x_diff(x_new)
+  def okay_length?(y_new)
+    y_diff = y_diff(y_new)
     # if it's first move, distance can be 1 or 2; else distance is 1
-    first_move?(x_new) ? (x_diff == 1 || x_diff == 2) : x_diff == 1
+    first_move?(y_new) ? (y_diff == 1 || y_diff == 2) : y_diff == 1
   end
     
-  def horizontal_move?(y_new)
+  def horizontal_move?(x_new)
     # check if x-position is changing
-    y_diff = y_diff(y_new)
-    y_diff != 0
+    x_diff = x_diff(x_new)
+    x_diff != 0
+  end
+
+  def vertical_blocker?(x_new, y_new)
+    blocker = game.pieces.where("x_pos = ? AND y_pos = ?", x_new, y_new).first
+    !blocker.nil?
   end
 
   def symbol
