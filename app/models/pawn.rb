@@ -1,6 +1,7 @@
 class Pawn < Piece
   def valid_move?(x_new, y_new)
     return true if capture_move?(x_new, y_new)
+    return false if is_obstructed?(x_new, y_new)
     return false if !within_bounds?(x_new, y_new)
     return false if backwards_move?(x_new)
     return false if vertical_blocker?(x_new, y_new)

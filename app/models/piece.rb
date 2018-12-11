@@ -56,14 +56,8 @@ class Piece < ApplicationRecord
       !pieces_in_row.where("y_pos > ? AND y_pos < ?", [self.y_pos, y_new].min, [self.y_pos, y_new].max).empty?
     # diagonal case
     elsif move_type(x_new, y_new) == :diagonal
-      (x_pos..x_new).each do |x|
-        next if x == self.x_pos
-        return false if x == x_new
-        (y_pos..y_new).each do |y|
-          next if y == self.y_pos
-          game.pieces.where(x_pos: x, y_pos: y).size == 1
-        end
-      end
+      diagonal_blocker?(x_new, y_new)
+    else
       puts "HELLO WE ARE IN THE NEXT STEP OF OBSTRUCTED"
       raise "Invalid move" if move_type(x_new, y_new) == :invalid
     end
@@ -104,5 +98,17 @@ class Piece < ApplicationRecord
 
   def starting_state
     self.state ||= 'unmoved'
+  end
+
+  def diagonal_blocker?(x, y, idx = 0)
+    x_range = (self.x_pos..x).to_a.tap { |x| x.pop; x.shift }
+    y_range = (self.y_pos..y).to_a.tap { |y| y.pop; y.shift }
+    if !game.piece_present(x_range[idx], y_range[idx]) && idx != idx[-1]
+      idx = idx + 1
+      diagonal_blocker?(x, y, idx)
+    elsif !game.piece_present(x_range[idx], y_range[idx]) && idx == idx[-1]
+      false
+    else return true
+    end
   end
 end
