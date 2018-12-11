@@ -10,6 +10,8 @@ class Piece < ApplicationRecord
   end
 
   def valid_move?(x_new, y_new)
+    x_new = x_new.to_i
+    y_new = y_new.to_i
     return false if move_type(x_new, y_new) == :invalid
     true
   end
@@ -42,32 +44,23 @@ class Piece < ApplicationRecord
 
   def is_obstructed?(x_new, y_new)
     puts "IS OBSTRUCTED??"
-    move_direction = move_type(x_new, y_new)
     pieces_in_row = game.pieces.where(x_pos: x_new)
     pieces_in_column = game.pieces.where(y_pos: y_new)
     # horizontal case
-    if move_direction == :horizontal
+    if move_type(x_new, y_new) == :horizontal
       puts "HELLO THERE, WE ARE IN THE HORIZONTAL MOVE DIRECTION"
-      return false if pieces_in_row.where("#{x_new} > ? AND #{x_new} < ?", [x_pos, x_new].min, [x_pos, x_new].max).empty?
+      !pieces_in_column.where("x_pos > ? AND x_pos < ?", [self.x_pos, x_new].min, [self.x_pos, x_new].max).empty?
       puts "HELLO THERE, WE ARE IN THE HORIZONTAL MOVE DIRECTION PART 2"
     # vertical case
-    elsif move_direction == :vertical
-      return false if pieces_in_column.where("#{y_new} > ? AND #{y_new} < ?", [y_pos, y_new].min, [y_pos, y_new].max).empty?
+    elsif move_type(x_new, y_new) == :vertical
+      !pieces_in_row.where("y_pos > ? AND y_pos < ?", [self.y_pos, y_new].min, [self.y_pos, y_new].max).empty?
     # diagonal case
-    elsif move_direction == :diagonal
-      (x_pos..x_new).each do |x|
-        next if x == x_pos
-        return false if x == x_new
-        (y_pos..y_new).each do |y|
-          next if y == y_pos
-          ## why 2 instead of 1?
-          # should be 1 (BK)
-          return true if game.pieces.where(x_pos: x, y_pos: y).size == 1
-        end
-      end
+    elsif move_type(x_new, y_new) == :diagonal
+      diagonal_blocker?(x_new, y_new)
+    else
+      puts "HELLO WE ARE IN THE NEXT STEP OF OBSTRUCTED"
+      raise "Invalid move" if move_type(x_new, y_new) == :invalid
     end
-    puts "HELLO WE ARE IN THE NEXT STEP OF OBSTRUCTED"
-    raise "Invalid move" if move_direction == :invalid
   end
 
   # move_to! method calls valid_move? and will update a piece instance's
@@ -75,8 +68,10 @@ class Piece < ApplicationRecord
   # this later to incorporate a piece status
   
   def move_to!(x_new, y_new)
+    x_new = x_new.to_i
+    y_new = y_new.to_i
     # Will raise error if move is invalid
-    return raise "Invalid move" if !valid_move?(x_new, y_new)
+    return raise "Invalid move for #{self.type} to #{x_new}, #{y_new}" if !valid_move?(x_new, y_new)
     occupant = game.piece_present(x_new, y_new)
     current_piece = game.pieces.where(x_pos: x_pos, y_pos: y_pos).first
     if occupant.nil? 
@@ -103,5 +98,17 @@ class Piece < ApplicationRecord
 
   def starting_state
     self.state ||= 'unmoved'
+  end
+
+  def diagonal_blocker?(x, y, idx = 0)
+    x_range = (self.x_pos..x).to_a.tap { |x| x.pop; x.shift }
+    y_range = (self.y_pos..y).to_a.tap { |y| y.pop; y.shift }
+    if !game.piece_present(x_range[idx], y_range[idx]) && idx != idx[-1]
+      idx = idx + 1
+      diagonal_blocker?(x, y, idx)
+    elsif !game.piece_present(x_range[idx], y_range[idx]) && idx == idx[-1]
+      false
+    else return true
+    end
   end
 end

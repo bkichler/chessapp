@@ -1,58 +1,62 @@
 <script>
-$( document ).ready(function() {
+$( document ).ready( function () {
+  var gameId = $( ".gameBoard" ).data( "id" );
   //Instantiate variables to hold pieces and unoccupied locations
   var $boardPieces = $( "td > p" ).filter(function( index ) {
       return $( this ).attr( "id" ) !== "empty";
     });
-  var $emptySquares = $( "td#unoccupied" );
+  var $allSquares = $( "td" );
   //Make pieces draggable
   $( $boardPieces ).draggable({
       revert: "invalid",
       containment: "table",
-      cursor: "crosshair"
+      cursor: "crosshair",
+      start: function( event, ui ) {
+          var $this = $( event.target );
+          $.get( "/games/" + gameId + "/pieces/" + $this.data( "id" ) )
+            .success( function ( data ) {
+                console.log( data );
+              });
+      }
     });
   //Make empty squares droppable
-  $( $emptySquares ).droppable({
+  $( $allSquares ).droppable({
     tolerance: "intersect",
     accept: $boardPieces,
-    drop: function ( event, ui ) {
+    drop: function( event, ui ) {
+      var $this = $( this );
+      ui.draggable.position ( {
+        my: "center",
+        at: "center",
+        of: $this
+      });
       var currentCol = $( ui.draggable ).parent();
-        console.log( "Current column is " + $( currentCol ).data( "id" ));
       var currentRow = $( currentCol ).parent();
-        console.log( "Current row is " + $( currentRow ).data( "id" ));
       var newCol = $( event.target );
-        console.log( "New col is " + newCol.data( "id" ) );
       var newRow = $( newCol ).parent();
-        console.log( "New row is " + newRow.data( "id" ) );
-      var currentPiece = $(ui.draggable);
+      var currentPiece = $( ui.draggable );
       //Update piece position
-      var gameId = $( ".gameBoard" ).data( "id" );
-        $.post("/games/" + gameId + "/pieces/" + $( currentPiece ).data( "id"), {
-          _method: "PUT",
-          piece: {
-            x_pos: newRow.data( "id" ),
-            y_pos: newCol.data( "id" )
-          }
+        $.post("/games/" + gameId + "/pieces/" + $( currentPiece ).data( "id") + "/move/", {
+          _method: "PUT",     
+            x_new: newRow.data( "id" ),
+            y_new: newCol.data( "id" )          
         }).success( function( data ) {
-          $( newCol ).append( ui.draggable );
-          console.log( $( currentRow ).prev( "td" ) );
-          $( currentRow ).prev( "td" ).attr( "id", "unoccupied" );
-          console.log(  $( newRow ).prev( "td" ).attr( "id" ) );
-          $( newRow ).prev( "td" ).attr( "id", "occupied" );
-        });       
+          var oldRowID = $( currentRow ).data( "id" );
+          var oldColID = $( currentCol ).data( "id" );
+          var newRowID = $( newRow ).data( "id" );
+          var newColID = $( newCol ).data( "id" );
+          $( "tr[data-id=" + oldRowID + "] td:nth-child(" + (oldColID+1) + ")" )
+            .attr("id", "unoccupied")
+            .addClass( "ui-droppable");
+          $( "tr[data-id=" + newRowID + "] td:nth-child(" + (newColID+1) + ")" )
+            .attr("id", "occupied")
+            .removeClass( "ui-droppable");
+        }).fail( function() {
+            alert( "Invalid move! Try again" );
+            location.reload();
+          });       
      } 
   });
-  //Attach delegated event handler
-  $( "td#occupied" ).on( "click", "p", function( event ) {
-    var $piece = $( this );
-    console.log( $piece );
-  });
-  //Build JS representation of piece HTML
-  function pieceHTML( piece ) {
-    var pElement = '<p id="' + piece.type + '_' + piece.piece_color + '"' + 
-      ' data-id="' + piece.id + '">';
-    return pElement;
-  };
 });
 </script>
 
@@ -102,7 +106,7 @@ $( document ).ready(function() {
     </table>
   </div>
   <div class="moveForm">
-    <%= form_tag move_game_path do %>
+    <%= form_tag move_game_piece_path(@game) do %>
       <%= hidden_field_tag "access_token", @access_token %>
       <%= number_field_tag "start_x", nil, class: "form-control", placeholder: "Starting X (Vertical)"%>
       <%= number_field_tag "start_y", nil, class: "form-control", placeholder: "Starting Y (Horizontal)" %>
