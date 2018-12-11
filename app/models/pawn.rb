@@ -1,10 +1,10 @@
 class Pawn < Piece
   def valid_move?(x_new, y_new)
+    return true if capture_move?(x_new, y_new)
     return false if !within_bounds?(x_new, y_new)
     return false if backwards_move?(x_new)
-    # once capture move logic is complete, will add return true if capture_move(x_new, y_new)
+    return false if vertical_blocker?(x_new, y_new)
     return false if horizontal_move?(y_new)
-    # return false if is_obstructed?(x_new, y_new)
     okay_length?(x_new)
   end
   
@@ -17,7 +17,12 @@ class Pawn < Piece
   
   # still need to add capture move logic
 
-  def capture_move(x_new, y_new)
+  def capture_move?(x_new, y_new)
+    target = game.pieces.where("x_pos = ? AND y_pos = ?", x_new, y_new).first
+    !target.nil?
+    if move_type(x_new, y_new) == :diagonal && x_diff(x_new) == 1 && y_diff(y_new) == 1
+      target.color != self.color && target.type != "King"
+    end
   end
   
   def first_move?(y_new)
@@ -36,6 +41,11 @@ class Pawn < Piece
     # check if x-position is changing
     y_diff = y_diff(y_new)
     y_diff != 0
+  end
+
+  def vertical_blocker?(x_new, y_new)
+    blocker = game.pieces.where("x_pos = ? AND y_pos = ?", x_new, y_new).first
+    !blocker.nil?
   end
 
   def symbol

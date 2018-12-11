@@ -6,7 +6,7 @@ RSpec.describe Knight, type: :model do
     user = FactoryBot.create(:user)
     game.black_player_user_id = user.id
     game.populate_game!
-    expect(game.pieces.where(type: "Knight").size).to be(2)
+    expect(game.pieces.where(type: "Knight").size).to be(4)
   end
 
   it 'has a valid_move? method that returns true for a 2-to-1 move in any direction' do

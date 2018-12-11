@@ -7,7 +7,7 @@ RSpec.describe King, type: :model do
     user = FactoryBot.create(:user)
     game.black_player_user_id = user.id
     game.populate_game!
-    expect(game.pieces.where(type: "King").size).to be(1)
+    expect(game.pieces.where(type: "King").size).to be(2)
   end
 	
 	describe 'king valid_move? method' do

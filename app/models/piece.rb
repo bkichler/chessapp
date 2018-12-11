@@ -47,10 +47,10 @@ class Piece < ApplicationRecord
     pieces_in_column = game.pieces.where(y_pos: y_new)
     # horizontal case
     if move_direction == :horizontal
-      return false if pieces_in_row.where("#{x_new} > ? AND #{x_new} < ?", [x_pos, x_new].min, [x_pos, x_new].max).empty?
+      return false if pieces_in_row.where("y_pos > ? AND y_pos < ?", [y_pos, y_new].min, [y_pos, y_new].max).empty?
     # vertical case
     elsif move_direction == :vertical
-      return false if pieces_in_column.where("#{y_new} > ? AND #{y_new} < ?", [y_pos, y_new].min, [y_pos, y_new].max).empty?
+      return false if pieces_in_column.where("x_pos > ? AND x_pos < ?", [x_pos, x_new].min, [x_pos, x_new].max).empty?
     # diagonal case
     elsif move_direction == :diagonal
       (x_pos..x_new).each do |x|

@@ -7,7 +7,7 @@ RSpec.describe Pawn, type: :model do
     user = FactoryBot.create(:user)
     game.black_player_user_id = user.id
     game.populate_game!
-    expect(game.pieces.where(type: "Pawn").size).to be(8)
+    expect(game.pieces.where(type: "Pawn").size).to be(16)
   end
 
   describe 'pawn backwards_move? method' do
@@ -52,6 +52,12 @@ RSpec.describe Pawn, type: :model do
 		it 'shoudl return true if first move is forward 2' do
 			pawn = FactoryBot.create(:pawn)
 			expect(pawn.valid_move?(3, 1)).to eq(true)
+		end
+	end
+
+	describe 'pawn is_obstructed? behavior' do
+		it 'should return true if a vertical obstruction exists' do
+			
 		end
 	end
 end
