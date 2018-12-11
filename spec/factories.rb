@@ -10,25 +10,30 @@ FactoryBot.define do
   factory :game do
   end
 
-  factory :pawn do
-    x_pos { 1 }
-    y_pos { 1 }
-    color { true }
-  end
-  
-  factory :queen do
-    x_pos { 3 }
-    y_pos { 0 }
-    color { true }
-  end
-  
-  factory :king do
-    x_pos { 4 }
-    y_pos { 0 }
-    color { true }
-  end
-
   factory :piece do
   end
+
+    factory :pawn do
+      x_pos { 1 }
+      y_pos { 1 }
+      color { true }
+    end
+    
+    factory :queen do
+      x_pos { 3 }
+      y_pos { 0 }
+      color { true }
+    end
+    
+    factory :king do
+      x_pos { 4 }
+      y_pos { 0 }
+      color { true }
+    end
+
+    factory :rook do
+      x_pos { 4 }
+      y_pos { 3 }
+    end 
 
 end

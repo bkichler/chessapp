@@ -52,7 +52,7 @@ class GamesController < ApplicationController
     @game = Game.find(params[:id])
     @piece = Piece.where(game_id: params[:id], x_pos: params[:start_x], y_pos: params[:start_y]).first
     #@piece = @game.pieces.where(x_pos: params[:start_x], y_pos: params[:start_y]) # find the piece to move
-    @piece.move_to!(params[:end_x].to_i, params[:end_y].to_i)
+    @piece.move_to!(params[:end_x].to_i, params[:end_y].to_i) 
     #@piece.update(x_pos: params[:end_x], y_pos: params[:end_y])                   # update the piece's position to the new position
     redirect_to game_path(@game.id)                                              # refresh the page ot show new position
   end
