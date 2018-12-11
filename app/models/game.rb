@@ -5,7 +5,6 @@ class Game < ApplicationRecord
   has_many :moves
 
   scope :available, -> { where("black_player_user_id is null or white_player_user_id is null") }
-  after_create :populate_game!
 
 
 def populate_game!
@@ -143,17 +142,18 @@ def create_black_pieces
     :color => false
   )
 end
-  
+
   def piece_present(x_pos, y_pos)
     pieces.where(x_pos: x_pos, y_pos: y_pos).first
   end
+
 
   def check?(color)
     king = pieces.where(type: 'King', color: true)
     opponent = pieces.where.not(color: true)
 
     opponent.each do |piece|
-      if piece.valid_move?(x_pos: king.x_pos, y_pos: king.y_pos)
+      if piece.move_type(x_pos: king.x_pos, y_pos: king.y_pos)
         return true
       end
     end

@@ -84,7 +84,12 @@ class Piece < ApplicationRecord
   end
 
   def piece_color
-    self.color
+    if self.color == false
+      'black'
+    elsif self.color == true
+      'white'
+    else self.color
+    end
   end
 
   def symbol
