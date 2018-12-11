@@ -32,6 +32,60 @@ class PiecesController < ApplicationController
     end
   end
 
+  def ks_castle
+    @game = Game.find(params[:game_id])
+    # Piece.where(game_id: @game.id, user_id: current_user.id) #how to get all pieces for current user
+    # Piece.where(game_id: @game.id, user_id: current_user.id, type: 'King').first # how to get the king piece
+    kings = King.where(game_id: @game.id, user_id: current_user.id) #better way to get the king
+    rooks = Rook.where(game_id: @game.id, user_id: current_user.id, x_pos: 0)
+    
+    king = kings[0]
+    rook = rooks[0]
+
+    if king == nil || rook == nil
+      render json: {}, status: 500
+      return
+    end
+
+    x_new = 1
+
+    if king.can_castle?(x_new)
+      king.castle!(x_new)
+      render json: {}, status: 200
+      return
+    else
+      # can not perform castle
+      render json: {}, status: 500
+      return
+    end
+  end  
+
+  def qs_castle
+    @game = Game.find(params[:game_id])
+    kings = King.where(game_id: @game.id, user_id: current_user.id) #better way to get the king
+    rooks = Rook.where(game_id: @game.id, user_id: current_user.id, x_pos: 7)
+    
+    king = kings[0]
+    rook = rooks[0]
+
+    if king == nil || rook == nil
+      render json: {}, status: 500
+      return
+    end
+
+    x_new = 5
+
+    if king.can_castle?(x_new)
+      king.castle!(x_new)
+      render json: {}, status: 200
+      return
+    else
+      # can not perform castle
+      render json: {}, status: 500
+      return
+    end
+  end   
+
   private
 
   def set_game!

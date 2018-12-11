@@ -3,7 +3,6 @@
 .gameBoard {
   padding: 20px;
   margin: 0px auto;
-
 }
 
 .whiteSquare {
@@ -18,6 +17,16 @@
   height: 75px;
   width: 75px;
   border-style: solid;
+}
+
+.booyah-box {
+	margin: 2%;
+}
+
+td[id^='piece_'] {
+  text-align: center;
+  font-size: 32px;
+  background-size: 32px !important;
 }
 
 td[id$='occupied'] {

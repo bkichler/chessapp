@@ -1,0 +1,52 @@
+$(function () {
+  $('#ksBtn').on('click', function () {
+    let $ks_castle_btn = $(this);
+    let game_id = $ks_castle_btn.data('game-id');
+    let ks_castle_url = '<%= Rails.application.routes.url_helpers.ks_castle_game_pieces_path(":game_id") %>'.replace(/:game_id/, game_id);
+
+    console.log('game_id: ', game_id);
+    console.log('ks_castle_url: ', ks_castle_url);
+
+    $.ajax({
+      url: ks_castle_url,
+      dataType: 'json',
+      type: 'patch',
+      beforeSend: function (xhr) { xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')) },
+      success: function (data) {
+        console.log('ks_castle_url success, data: ', data);
+        window.location.reload();
+      },
+      error: function (e) {
+        console.error('ks_castle_url error, e: ', e);
+        alert('unable to kingside castle ...');
+      }
+    }); 
+  });
+});
+
+$(function () {
+  $('#qsBtn').on('click', function () {
+    let $qs_castle_btn = $(this);
+    let game_id = $qs_castle_btn.data('game-id');
+    let qs_castle_url = '<%= Rails.application.routes.url_helpers.qs_castle_game_pieces_path(":game_id") %>'.replace(/:game_id/, game_id);
+
+    console.log('game_id: ', game_id);
+    console.log('qs_castle_url: ', qs_castle_url);
+
+    $.ajax({
+      url: qs_castle_url,
+      dataType: 'json',
+      type: 'patch',
+      beforeSend: function (xhr) { xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')) },
+      success: function (data) {
+        console.log('qs_castle_url success, data: ', data);
+        window.location.reload();
+      },
+      error: function (e) {
+        console.error('qs_castle_url error, e: ', e);
+        alert('unable to queenside castle ...');
+      }
+    }); 
+  });
+});
+

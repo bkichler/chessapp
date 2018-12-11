@@ -8,15 +8,15 @@ class Game < ApplicationRecord
 
 
 def populate_game!
-  create_white_pieces
   create_black_pieces
+  create_white_pieces
   set_player_ids
 end
 
 # is black/white_player_user_id is set, update pieces.user_id for that player
 def set_player_ids
-  set_pieces_user(true, self.white_player_user_id) if self.white_player_user_id.present?
   set_pieces_user(false, self.black_player_user_id) if self.black_player_user_id.present?
+  set_pieces_user(true, self.white_player_user_id) if self.white_player_user_id.present?
 end
 
 def set_pieces_user(color, user_id)
@@ -25,60 +25,60 @@ end
 
 def create_white_pieces
   8.times do |i|
-    Pawn.create!(
+    Pawn.create(
       :game_id => self.id,
-      :x_pos => 1,
-      :y_pos => i,
+      :x_pos => i,
+      :y_pos => 1,
       :color => true
     )
   end
 
-  Rook.create!(
+  Rook.create(
     :game_id => self.id,
     :x_pos => 0,
     :y_pos => 0,
     :color => true
   )
-  Rook.create!(
+  Rook.create(
     :game_id => self.id,
-    :x_pos => 0,
-    :y_pos => 7,
+    :x_pos => 7,
+    :y_pos => 0,
     :color => true
   )
   Knight.create(
     :game_id => self.id,
-    :x_pos => 0,
-    :y_pos => 1,
+    :x_pos => 1,
+    :y_pos => 0,
     :color => true
   )
   Knight.create(
     :game_id => self.id,
-    :x_pos => 0,
-    :y_pos => 6,
+    :x_pos => 6,
+    :y_pos => 0,
     :color => true
   )
   Bishop.create(
     :game_id => self.id,
-    :x_pos => 0,
-    :y_pos => 2,
+    :x_pos => 2,
+    :y_pos => 0,
     :color => true
   )
   Bishop.create(
     :game_id => self.id,
-    :x_pos => 0,
-    :y_pos => 5,
+    :x_pos => 5,
+    :y_pos => 0,
     :color => true
   )
   Queen.create(
     :game_id => self.id,
-    :x_pos => 0,
-    :y_pos => 3,
+    :x_pos => 4,
+    :y_pos => 0,
     :color => true
   )
   King.create(
     :game_id => self.id,
-    :x_pos => 0,
-    :y_pos => 4,
+    :x_pos => 3,
+    :y_pos => 0,
     :color => true
   )
 end
@@ -88,15 +88,15 @@ def create_black_pieces
   8.times do |y|
     Pawn.create(
       :game_id => self.id,
-      :x_pos => 6,
-      :y_pos => y,
+      :x_pos => y,
+      :y_pos => 6,
       :color => false
     )
   end
   Rook.create(
     :game_id => self.id,
-    :x_pos => 7,
-    :y_pos => 0,
+    :x_pos => 0,
+    :y_pos => 7,
     :color => false
   )
   Rook.create(
@@ -107,38 +107,38 @@ def create_black_pieces
   )
   Knight.create(
     :game_id => self.id,
-    :x_pos => 7,
-    :y_pos => 1,
+    :x_pos => 1,
+    :y_pos => 7,
     :color => false
   )
   Knight.create(
     :game_id => self.id,
-    :x_pos => 7,
-    :y_pos => 6,
+    :x_pos => 6,
+    :y_pos => 7,
     :color => false
   )
   Bishop.create(
     :game_id => self.id,
-    :x_pos => 7,
-    :y_pos => 2,
+    :x_pos => 2,
+    :y_pos => 7,
     :color => false
   )
   Bishop.create(
     :game_id => self.id,
-    :x_pos => 7,
-    :y_pos => 5,
+    :x_pos => 5,
+    :y_pos => 7,
     :color => false
   )
   Queen.create(
     :game_id => self.id,
-    :x_pos => 7,
-    :y_pos => 3,
+    :x_pos => 4,
+    :y_pos => 7,
     :color => false
   )
   King.create(
     :game_id => self.id,
-    :x_pos => 7,
-    :y_pos => 4,
+    :x_pos => 3,
+    :y_pos => 7,
     :color => false
   )
 end

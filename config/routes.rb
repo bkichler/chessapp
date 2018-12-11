@@ -8,9 +8,12 @@ Rails.application.routes.draw do
     end
     resources :pieces do
       member do
-        get :move_status
         patch :move
         put :move
+      end
+      collection do
+        patch :ks_castle
+        patch :qs_castle
       end
     end
   end
