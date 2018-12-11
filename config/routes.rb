@@ -7,7 +7,12 @@ Rails.application.routes.draw do
       put :join_as_black, :join_as_white
       post :move
     end
-    resources :pieces
+    resources :pieces do
+      collection do
+        patch :ks_castle
+        patch :qs_castle
+      end
+    end
   end
   resources :pieces, only: [:update]
 

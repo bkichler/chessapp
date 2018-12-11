@@ -59,12 +59,18 @@ $( document ).ready(function() {
 <div class="booyah-box col-12">           
   <h1>Welcome to the game</h1>
   <%= link_to 'Forfeit?', game_path(@game), method: :delete, data: {confirm: 'Are you sure you want to delete this?'}, class: 'btn btn-danger' %>
+  <br />
+  <br />
+<button type="button" id="ksBtn" data-game-id="<%= @game.id %>"> Kingside Castle</button>
+<button type="button" id="qsBtn" data-game-id="<%= @game.id %>"> Queenside Castle</button>
+
   <div class="gameBoard" data-id="<%= @game.id %>">
     <table>
       <tbody>
         <% 8.times do |row| %>
           <tr data-id="<%= row %>">
             <% 8.times do |col|%>
+
 
               <% piece = @game.pieces.
                 where(

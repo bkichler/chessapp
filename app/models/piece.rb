@@ -1,4 +1,6 @@
 class Piece < ApplicationRecord
+  after_initialize :starting_state
+
   belongs_to :game, optional: true
   belongs_to :user, optional: true
   has_many :moves
@@ -18,7 +20,7 @@ class Piece < ApplicationRecord
   def x_diff(x)
     (x - x_pos).abs
   end
-  
+   
   # same as above but for y position
   def y_diff(y)
     (y - y_pos).abs
@@ -26,9 +28,8 @@ class Piece < ApplicationRecord
 
   def move_type(x_new, y_new)
     # Need to deal with Knight case
-    vertical_delta = (x_new - x_pos).abs
-    horizontal_delta = (y_new - y_pos).abs
-
+    vertical_delta = (y_new - y_pos).abs
+    horizontal_delta = (x_new - x_pos).abs
     return :horizontal if horizontal_delta > 0 && vertical_delta.zero?
     return :vertical if vertical_delta > 0 && horizontal_delta.zero?
     return :diagonal if vertical_delta == horizontal_delta
@@ -40,12 +41,15 @@ class Piece < ApplicationRecord
   end
 
   def is_obstructed?(x_new, y_new)
+    puts "IS OBSTRUCTED??"
     move_direction = move_type(x_new, y_new)
     pieces_in_row = game.pieces.where(x_pos: x_new)
     pieces_in_column = game.pieces.where(y_pos: y_new)
     # horizontal case
     if move_direction == :horizontal
+      puts "HELLO THERE, WE ARE IN THE HORIZONTAL MOVE DIRECTION"
       return false if pieces_in_row.where("#{x_new} > ? AND #{x_new} < ?", [x_pos, x_new].min, [x_pos, x_new].max).empty?
+      puts "HELLO THERE, WE ARE IN THE HORIZONTAL MOVE DIRECTION PART 2"
     # vertical case
     elsif move_direction == :vertical
       return false if pieces_in_column.where("#{y_new} > ? AND #{y_new} < ?", [y_pos, y_new].min, [y_pos, y_new].max).empty?
@@ -62,6 +66,7 @@ class Piece < ApplicationRecord
         end
       end
     end
+    puts "HELLO WE ARE IN THE NEXT STEP OF OBSTRUCTED"
     raise "Invalid move" if move_direction == :invalid
   end
 
@@ -74,7 +79,7 @@ class Piece < ApplicationRecord
     return raise "Invalid move" if !valid_move?(x_new, y_new)
     occupant = game.piece_present(x_new, y_new)
     current_piece = game.pieces.where(x_pos: x_pos, y_pos: y_pos).first
-    if occupant.nil?
+    if occupant.nil? 
       current_piece.update_attributes(x_pos: x_new, y_pos: y_new)
     elsif occupant.color != current_piece.color
       current_piece.update_attributes(x_pos: x_new, y_pos: y_new)
@@ -94,5 +99,9 @@ class Piece < ApplicationRecord
 
   def symbol
     self.color ? 'X' : 'Y'
+  end
+
+  def starting_state
+    self.state ||= 'unmoved'
   end
 end

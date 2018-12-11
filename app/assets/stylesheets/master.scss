@@ -3,31 +3,40 @@
 .gameBoard {
   padding: 20px;
   margin: 0px auto;
-
 }
 
 .whiteSquare {
   background-color: #F0D9B5;
   height: 50px;
   width: 50px;
-  border-style: solid;
 }
 
 .blackSquare {
   background-color: #B58863;
   height: 50px;
   width: 50px;
-  border-style: solid;
+}
+
+.booyah-box {
+	margin: 2%;
+}
+
+td[id^='piece_'] {
+  text-align: center;
+  font-size: 32px;
+  background-size: 32px !important;
 }
 
 td[id$='occupied'] {
   text-align: center;
-  vertical-align: middle;
-  font-size: 20px;
+  font-size: 32px;
+  background-size: 32px !important;
 }
 
-p[id='Pawn_black'] {
-  font-size: 12px !important;
+#piece_Pawn {
+  font-size: 32px !important;
+  vertical-align: middle;
+  font-size: 20px;
 }
 
 td p {
