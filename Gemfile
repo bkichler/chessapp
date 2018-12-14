@@ -75,5 +75,8 @@ gem 'rubocop-rails_config'
 # Upgrading loofah gem to 2.2.3 due to security vulnerability flagged in Github
 gem 'loofah', ">=2.2.3"
 
+# Adding firebase gem
+gem 'firebase'
+
 
 

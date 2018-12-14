@@ -1,5 +1,6 @@
 <script>
 $( document ).ready( function () {
+  // var myFirebaseRef = new Firebase("https://team-finishers.firebaseio.com/");
   var gameId = $( ".gameBoard" ).data( "id" );
   //Instantiate variables to hold pieces and unoccupied locations
   var $boardPieces = $( "td > p" ).filter(function( index ) {
@@ -51,6 +52,9 @@ $( document ).ready( function () {
           $( "tr[data-id=" + newRowID + "] td:nth-child(" + (newColID+1) + ")" )
             .attr("id", "occupied")
             .removeClass( "ui-droppable");
+          // myFirebaseRef.child( "td[data-id" + (newColID+1) + ")" ).on( "child-added", function( snapshot ) {
+          //     console.log( snapshot.val().name );
+          //   });
         }).fail( function() {
             alert( "Invalid move! Try again" );
             location.reload();
