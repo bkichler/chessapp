@@ -25,17 +25,20 @@
 
 td[id^='piece_'] {
   text-align: center;
-  font-size: 42px;
-  background-size: 42px !important;
+  font-size: 48px;
 }
 
 td[id$='occupied'] {
   text-align: center;
   vertical-align: middle;
-  font-size: 30px;
+  font-size: 48px;
 }
 
 p[id='Pawn_black'] {
+  font-size: 42px !important;
+}
+
+p[id='Pawn_white'] {
   font-size: 42px !important;
 }
 
