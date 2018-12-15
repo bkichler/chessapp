@@ -43,22 +43,26 @@ class Piece < ApplicationRecord
   end
 
   def is_obstructed?(x_new, y_new)
-    puts "IS OBSTRUCTED??"
+    puts "ENTER IS_OBSTRUCTED"
     pieces_in_row = game.pieces.where(x_pos: x_new)
     pieces_in_column = game.pieces.where(y_pos: y_new)
     # horizontal case
     if move_type(x_new, y_new) == :horizontal
-      puts "HELLO THERE, WE ARE IN THE HORIZONTAL MOVE DIRECTION"
+      puts "HORIZONTAL MOVE DIRECTION"
       !pieces_in_column.where("x_pos > ? AND x_pos < ?", [self.x_pos, x_new].min, [self.x_pos, x_new].max).empty?
-      puts "HELLO THERE, WE ARE IN THE HORIZONTAL MOVE DIRECTION PART 2"
+      puts "HORIZONTAL MOVE DIRECTION PART 2"
     # vertical case
     elsif move_type(x_new, y_new) == :vertical
+      puts "VERTICAL MOVE DIRECTION"
       !pieces_in_row.where("y_pos > ? AND y_pos < ?", [self.y_pos, y_new].min, [self.y_pos, y_new].max).empty?
+      puts "VERTICAL MOVE DIRECTION PART 2"
     # diagonal case
     elsif move_type(x_new, y_new) == :diagonal
+      puts "DIAGONAL MOVE DIRECTION"
       diagonal_blocker?(x_new, y_new)
+      puts "DIAGONAL MOVE DIRECTION PART 2"
     else
-      puts "HELLO WE ARE IN THE NEXT STEP OF OBSTRUCTED"
+      puts "INVALID MOVE DIRECTION"
       raise "Invalid move" if move_type(x_new, y_new) == :invalid
     end
   end
@@ -101,14 +105,19 @@ class Piece < ApplicationRecord
   end
 
   def diagonal_blocker?(x, y, idx = 0)
+    puts "ENTER DIAGONAL_BLOCKER"
     x_range = (self.x_pos..x).to_a.tap { |x| x.pop; x.shift }
     y_range = (self.y_pos..y).to_a.tap { |y| y.pop; y.shift }
     if !game.piece_present(x_range[idx], y_range[idx]) && idx != idx[-1]
       idx = idx + 1
+      puts "X: #{x}, Y: #{y}, idx: #{idx}"
       diagonal_blocker?(x, y, idx)
     elsif !game.piece_present(x_range[idx], y_range[idx]) && idx == idx[-1]
+      puts "IS DIAGONAL BLOCKED?? - FALSE"
       false
+      puts "IS DIAGONAL BLOCKED?? - ELSE STATEMENT - TRUE"
     else return true
+      puts "IS DIAGONAL BLOCKED?? - ELSE STATEMENT - TRUE2"
     end
   end
 end
