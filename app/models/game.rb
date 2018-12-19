@@ -1,4 +1,6 @@
 class Game < ApplicationRecord
+  after_create :populate_game!
+
   has_many :user_games
   has_many :users
   has_many :pieces

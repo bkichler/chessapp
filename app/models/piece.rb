@@ -43,14 +43,11 @@ class Piece < ApplicationRecord
   end
 
   def is_obstructed?(x_new, y_new)
-    puts "IS OBSTRUCTED??"
     pieces_in_row = game.pieces.where(x_pos: x_new)
     pieces_in_column = game.pieces.where(y_pos: y_new)
     # horizontal case
     if move_type(x_new, y_new) == :horizontal
-      puts "HELLO THERE, WE ARE IN THE HORIZONTAL MOVE DIRECTION"
       !pieces_in_column.where("x_pos > ? AND x_pos < ?", [self.x_pos, x_new].min, [self.x_pos, x_new].max).empty?
-      puts "HELLO THERE, WE ARE IN THE HORIZONTAL MOVE DIRECTION PART 2"
     # vertical case
     elsif move_type(x_new, y_new) == :vertical
       !pieces_in_row.where("y_pos > ? AND y_pos < ?", [self.y_pos, y_new].min, [self.y_pos, y_new].max).empty?
@@ -58,7 +55,6 @@ class Piece < ApplicationRecord
     elsif move_type(x_new, y_new) == :diagonal
       diagonal_blocker?(x_new, y_new)
     else
-      puts "HELLO WE ARE IN THE NEXT STEP OF OBSTRUCTED"
       raise "Invalid move" if move_type(x_new, y_new) == :invalid
     end
   end
