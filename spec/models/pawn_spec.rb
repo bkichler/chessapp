@@ -54,4 +54,11 @@ RSpec.describe Pawn, type: :model do
 			expect(pawn.valid_move?(3, 1)).to eq(true)
 		end
 	end
+	
+	describe 'pawn en_passant? method' do
+		it 'should return true if pawn is in en_passant' do
+			pawn = FactoryBot.create(:pawn)
+			expect(pawn.en_passant?(3)).to eq(true)
+		end
+	end
 end

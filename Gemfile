@@ -76,4 +76,7 @@ gem 'rubocop-rails_config'
 gem 'loofah', ">=2.2.3"
 
 
-
+gem 'omniauth'
+gem 'omniauth-facebook'
+gem 'omniauth-twitter'
+gem 'omniauth-google'

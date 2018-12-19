@@ -73,9 +73,13 @@ class Piece < ApplicationRecord
     # Will raise error if move is invalid
     return raise "Invalid move for #{self.type} to #{x_new}, #{y_new}" if !valid_move?(x_new, y_new)
     occupant = game.piece_present(x_new, y_new)
-    current_piece = game.pieces.where(x_pos: x_pos, y_pos: y_pos).first
+    current_piece = game.pieces.where(x_pos: x_pos, y_pos: y_pos).first    
     if occupant.nil? 
-      current_piece.update_attributes(x_pos: x_new, y_pos: y_new)
+      if current_piece.type == 'Pawn' && en_passant?(y_new)
+        current_piece.update_attributes(x_pos: x_new, y_pos: y_new, state: 'en_passant')
+      else
+        current_piece.update_attributes(x_pos: x_new, y_pos: y_new, state: 'moved')
+      end
     elsif occupant.color != current_piece.color
       current_piece.update_attributes(x_pos: x_new, y_pos: y_new)
       occupant.update_attributes(x_pos: nil, y_pos: nil)
