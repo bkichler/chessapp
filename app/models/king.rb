@@ -86,4 +86,18 @@ class King < Piece
     self.update_attributes!(x_pos: x_new)   
   end
 
+  def in_check?
+    # king = pieces.find_by(type: 'King', user_id: current_user.id)
+    king = self
+    x_king = king.x_pos
+    y_king = king.y_pos
+ 
+    if !user_id
+      self.game.pieces.each do |piece|
+        return true if piece.valid_move?(x_king, y_king)
+      end
+    end
+ 
+    return false
+  end
 end
