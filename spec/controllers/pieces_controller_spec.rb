@@ -41,15 +41,16 @@ RSpec.describe PiecesController, type: :controller do
 
       # Switch to piece controller, send put request to move method
       @controller = PiecesController.new
-      piece = game.pieces.where("x_pos = ? AND y_pos = ?", 6, 4).first
+      piece = game.pieces.where("x_pos = ? AND y_pos = ?", 4, 6).first
+      puts piece
       put :move, params: { 
                             game_id: game.id,
                             id: piece.id,
-                            x_new: 5,
-                            y_new: 4
+                            x_new: 4,
+                            y_new: 5
                           }
       piece.reload
-      expect(piece.x_pos).to eq(5)
+      expect(piece.x_pos).to eq(4)
     end
   end 
 end

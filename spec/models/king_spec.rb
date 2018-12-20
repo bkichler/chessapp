@@ -57,4 +57,20 @@ RSpec.describe King, type: :model do
     end
 
   end
+
+  describe 'king in_check?' do
+    it 'should return true when king is in check' do
+      game = FactoryBot.create(:game)
+      user1 = FactoryBot.create(:user)
+      user2 = FactoryBot.create(:user)
+      game.black_player_user_id = user1.id
+      game.white_player_user_id = user2.id
+
+      king = FactoryBot.create(:king, x_pos: 2, y_pos: 0, color: true, game: game)
+      rook = FactoryBot.create(:rook, x_pos: 4, y_pos: 0, color: false, game: game)
+
+      expect(king.in_check?).to be true
+
+    end
+  end
 end

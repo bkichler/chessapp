@@ -3,10 +3,7 @@ require 'rails_helper'
 RSpec.describe Knight, type: :model do
   it 'is created with populate_game method' do
     game = FactoryBot.create(:game)
-    user = FactoryBot.create(:user)
-    game.black_player_user_id = user.id
-    game.populate_game!
-    expect(game.pieces.where(type: "Knight").size).to be(2)
+    expect(game.pieces.where(type: "Knight").size).to be(4)
   end
 
   it 'has a valid_move? method that returns true for a 2-to-1 move in any direction' do
@@ -14,9 +11,9 @@ RSpec.describe Knight, type: :model do
     user = FactoryBot.create(:user)
     game.black_player_user_id = user.id
     game.populate_game!
-    knight = game.pieces.where("x_pos = ? AND y_pos = ?", 7, 1).first
-    expect(knight.valid_move?(5, 2)).to eq(true)
-    expect(knight.valid_move?(5, 0)).to eq(true)
+    knight = game.pieces.where("x_pos = ? AND y_pos = ?", 1, 7).first
+    expect(knight.valid_move?(2, 5)).to eq(true)
+    expect(knight.valid_move?(0, 5)).to eq(true)
     expect(knight.valid_move?(6, 3)).to eq(false)
     expect(knight.valid_move?(6, 4)).to eq(false)
     expect(knight.valid_move?(5, 3)).to eq(false)
