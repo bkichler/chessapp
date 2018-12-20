@@ -94,10 +94,11 @@ class King < Piece
  
     if !user_id
       self.game.pieces.each do |piece|
-        return true if piece.valid_move?(x_king, y_king)
+        if piece.valid_move?(x_king, y_king)
+          return true
+        end
       end
-    end
- 
+    end 
     return false
   end
 end

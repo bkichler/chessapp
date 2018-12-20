@@ -1,5 +1,6 @@
 class PiecesController < ApplicationController
   skip_before_action :verify_authenticity_token
+  before_filter :set_cache_headers
   before_action :set_game!
 
   def index
@@ -94,6 +95,12 @@ class PiecesController < ApplicationController
 
   def piece_params
     params.require(:piece).permit(:game_id, :user_id, :type, :color, :x_pos, :y_pos, :x_new, :y_new)
+  end
+
+  def set_cache_headers
+    response.headers["Cache-Control"] = "no-cache, no-store"
+    response.headers["Pragma"] = "no-cache"
+    response.headers["Expires"] = "Fri, 01 Jan 1990 00:00:00 GMT"
   end
 end
 
