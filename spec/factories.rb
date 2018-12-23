@@ -30,4 +30,10 @@ FactoryBot.define do
 
   factory :rook do
   end
+
+  factory :knight do
+    x_pos { 6 }
+    y_pos { 0 }
+    color { true }
+  end
 end
